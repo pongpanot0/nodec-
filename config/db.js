@@ -1,4 +1,4 @@
-var mysql  = require('mssql');
+var mysql  = require('mysql2');
 
 /* var config = {
     user:"sa",
