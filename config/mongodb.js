@@ -1,7 +1,7 @@
 
 
 const { MongoClient } = require("mongodb");
-const uri = "mongodb://119.59.97.193:27017/";
+const uri = "mongodb://localhost:27018/";
 const conn = new MongoClient(uri);
 conn.connect();
 console.log('Start')

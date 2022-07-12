@@ -1,88 +1,24 @@
 const db = require("../config/db");
 const conn = require("../config/mongodb");
-exports.insert = async (req, res) => {
-  const moment = require("moment");
-  const today = new Date();
-  // current minutes
-  const dateObject = new Date();
-  const hours = dateObject.getHours();
-  const minutes = dateObject.getMinutes();
 
-  // current seconds
-  const seconds = dateObject.getSeconds();
-  let date = today.toLocaleDateString("en-US");
-  let start = dateObject.getHours() + ":" + dateObject.getMinutes();
-  let late = "8:30";
-  let end = today.toLocaleDateString("en-US");
-  let name = req.body.name;
-  let organize = req.body.organize;
-  let machine = req.body.machine;
-  console.log(moment(start, "hh:mm").minute());
-  console.log(moment(late, "mm"));
-  let insert = `insert into expoetexcel(date,start,end,name) value("${date}","${start}","${end}","${name}") `;
-  console.log(today.toLocaleDateString("en-US"));
-  db.query(insert, (err, result) => {
-    if (err) {
-      console.log(err);
-    }
-    if (start < late) {
-      const lineNotify = require("line-notify-nodejs")(
-        "7t5hc3d22TFAsM6tKOLyMNtEmL2mHE1JcN7KqnpArKX"
-      );
-      lineNotify
-        .notify({
-          message: `คุณ ${name} 
-แผนก ${organize} 
-บันทึกเวลา @${machine}
-วันที่ ${date}
-เวลา${start}`,
-        })
-        .then(() => {
-          res.send("SendComplete");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    if (start > late) {
-      const lineNotify = require("line-notify-nodejs")(
-        "7t5hc3d22TFAsM6tKOLyMNtEmL2mHE1JcN7KqnpArKX"
-      );
-      lineNotify
-        .notify({
-          message: `คุณ ${name} 
-แผนก ${organize} 
-บันทึกเวลา @${machine}
-วันที่ ${date}
-เวลา${start}
-คุณเข้างานสาย${
-            moment(start, "hh:mm").minute() - moment(late, "hh:mm").minute()
-          }นาที
-คลิกดูสรุป`,
-        })
-        .then(() => {
-          res.send("SendComplete");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  });
-};
+
 exports.get = async (req, res) => {
   await conn.connect();
   const log = await conn
     .db("logAttendance")
     .collection("log")
-    .find({}).limit(10)
+    .find({})
+    .limit(10)
     .toArray();
-  await conn.close();
+
   console.log(log.length);
   res.send({
     count: log.length,
     data: log,
   });
 };
+
+
 exports.insertExample = async (req, res) => {
   try {
     await db.connect();
@@ -136,7 +72,7 @@ exports.insertExample = async (req, res) => {
     }
 
     await conn.db("logAttendance").collection("log").insertMany(doc);
-    await conn.close();
+
     return res.status(200).send({
       user: "res",
     });
@@ -145,36 +81,130 @@ exports.insertExample = async (req, res) => {
   }
 };
 
-
-
-
 exports.getall = async (req, res) => {
-  id = req.params.id
-  var ObjectId = require('mongodb').ObjectID;
-  const query = { "Badgenumber": "1" };
+  id = req.params.id;
+  const pipeline = [
+    { $match: { title: "name" } },
+    {
+      $group: {
+        _id: { name: "$title", start: "$start", _id: "$_id" },
+        count: { $sum: 1 }, //$sum accumulator
+        totalValue: { $sum: "$value" }, //$sum accumulator
+      },
+    },
+  ];
+
+  const query = { Badgenumber: "1" };
   await conn.connect();
   const log = await conn
     .db("logAttendance")
     .collection("log")
-    .find(query).toArray()
-  await conn.close();
+    .aggregate(pipeline)
+    .toArray();
+  for await (const doc of log) {
+    console.log(doc);
+  }
+
 
   res.send({
     data: log,
   });
 };
-exports.insert = async (req, res) => {
-  id = req.params.id
-  var ObjectId = require('mongodb').ObjectID;
-  const query = { "Badgenumber": "1" };
+
+exports.getId = async (req, res) => {
+  id = req.params.id;
+  var ObjectId = require("mongodb").ObjectID;
+  const query = { Badgenumber: "1" };
   await conn.connect();
   const log = await conn
     .db("logAttendance")
     .collection("log")
-    .find(query).toArray()
-  await conn.close();
+    .find(query)
+    .toArray();
+
 
   res.send({
     data: log,
   });
 };
+var moment = require("moment");
+const Event = require("../Model/Event");
+exports.insertAttendance = async (req, res) => {
+  try {
+    const event = {
+      anSEnrollNumber: req.body.anSEnrollNumber,
+      anVerifyMode: req.body.anVerifyMode,
+      anInOutMode:req.body.anInOutMode,
+      start: moment(req.body.anIanLogDatenOutMode).toDate(),
+      astrDeviceIP:req.body.astrDeviceIP,
+      anDevicePort: req.body.anDevicePort,
+      anDeviceID:req.body.anDeviceID,
+      astrSerialNo:req.body.astrSerialNo,
+      astrRootIP:req.body.astrRootIP
+
+    };
+    await conn.connect();
+    await conn
+      .db("logAttendance")
+      .collection("log")
+      .insertOne(event, async (err, result) => {
+        if (err) {
+          console.log(err);
+        } if(result) {
+          
+          console.log(result)
+          const Employess = await conn
+            .db("logAttendance")
+            .collection("Employess")
+            .findOne({ anSEnrollNumber: event.anSEnrollNumber });
+          if (Employess.linetoken == null) {
+            const lineNotify = require("line-notify-nodejs")(
+              `QPWB8vQZCnPPB638Gii1Ur9g3MmZ02u1jPDs4s4bzDH`
+            );
+            await lineNotify
+              .notify({
+                message: `${Employess.company}
+คุณ : ${Employess.name} 
+แผนก : ${Employess.organize} 
+บันทึกเวลา : @${event.anDeviceID}
+วันที่ : ${moment(event.anIanLogDatenOutMode).format('DD/MM/YY')}
+เวลา : ${moment(event.anIanLogDatenOutMode).format('HH:MM')}
+ดูสรุป : www.HIPezline.co.th`,
+              })
+              .then((result) => {
+           
+                res.send(result);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+          if (Employess.linetoken !== null) {
+            const lineNotify = require("line-notify-nodejs")(
+              `${Employess.linetoken}`
+            );
+            await lineNotify
+              .notify({
+                message: `${Employess.company}
+คุณ : ${Employess.name} 
+แผนก : ${Employess.organize} 
+บันทึกเวลา : @${event.anDeviceID}
+วันที่ : ${moment(event.anIanLogDatenOutMode).format('DD/MM/YY')}
+เวลา : ${moment(event.anIanLogDatenOutMode).format('HH:MM')}
+ดูสรุป : www.HIPezline.co.th`,
+              })
+              .then((result) => {
+                res.send(result);
+             
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        }
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
