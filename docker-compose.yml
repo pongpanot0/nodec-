@@ -1,0 +1,50 @@
+version: '3.9' # optional since v1.27.0
+services:
+  docker-backend:
+    environment:
+            - DB_HOST=host.docker.internal
+            - DB_PORT=3307
+            - DB_DATABASE=athentic_rop_db
+            - DB_USERNAME=root
+            - DB_PASSWORD=ZrjmYlVZvB2YPp1t
+            - MAIL_MAILER=smtp
+            - MAIL_HOST=smtp.sendgrid.net
+            - MAIL_PORT=587
+            - MAIL_USERNAME=apikey
+            - MAIL_PASSWORD=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
+            - MAIL_ENCRYPTION=tls
+            - MAIL_FROM_ADDRESS=noreply@themis-technology.com
+            - MAIL_FROM_NAME=Themis-Technology
+            - JWT_SECRET=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
+            - GOOGLE_CLOUD_ACCOUNT_TYPE=service_account
+            - GOOGLE_CLOUD_PRIVATE_KEY_ID=da754c086c88cc8e82b876734eec3f5776333c4f
+            - GOOGLE_CLOUD_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC+UqrT1taSjY3z\nnYskrku3Uphb+7qXsYhook6HaveMFWUiN0BgDGgzKKDobn+hmUI25eQ/vF9dT/lb\nmTfcLeXrp2vPuthIOboD+jL6BmhQzenOmPGbj94dJ1VQHvqtN3mfFjCrYRjDD6t3\nFsXn7KaShrUFihsjQ0VeoocJWMD9RKS4JLBdkyievrt6eSdvsZmr0hTzPPs59eBt\n1gi0/Z9uSd0K3oPAcZBH3L3pYOci1p0bQ0QNl2YqpOxzrgZrz1/RnT59fy7rD8lN\na7ZjixdL+T/OEnf1sCRnkYkVJ15FxRCF3bY6TkL8U8tcWb+354C08d5SClEOw59O\nYDxyKO4RAgMBAAECggEAItQL8NI61/zRgkhNQzwmHPkfao3JWqMhXEx/ZGadwGPV\n6woDXNBIbTw9HevCrXbXWCZ/u24kYXYWIr4KK9+2WIZ9wzjlBWqS8NFjbL+pbUgR\nRj5U0GvmcJ1XDl9s7i/dsNAlveb52hBPB28CbmuvG9dM3yOjzbMsyaGiZoJ4ZqBN\nO4mGsnfNMZ0qmd1B5SJHBGzJPo3TJsGtQv9TRVONuraOztcBaJ5QXcxd5EZxsXda\nBhK6VptkVEOpRYVeDwJtzF487pGuaRIurq5zoYj/BW1hH/qdnN6Mss3xR/3pDivu\nzCVeqXne9WuZtMxb6i6CmqYcBqPkAOI9mfQMDrE7RQKBgQDqA1CDJQA9Z5MB8dju\nJMGS4zwx9BmOPlDvuwOL9hV6NpNbUQmU6u9MJn2GnK6ZN60BjGbu/HDfSi/lAM5a\nnKF9eJMYOlfxBIyRgVIkxtAlCbc9TKn7zAuChzlKNEbH/sb1/KVhSa+47qDsd9Ei\nY7/UsJqm6BkbVu6abxuZ7YF7hwKBgQDQNHtUmqWq6cNnPrrTZqQIQ0OQJXlT00MB\nYGTDpHwHHUfcRCgMUhFDChFq0IrQujyuKZoAjUgwxnVLjyoiWxGwxBEPIKqwiFf6\nBoU68tjceiHvxxCibOD8cF9UoZU8Qqje33QVLvAHOA7jwEQJZBHh6WMXduwYLir9\nT8SUzGQfpwKBgA0hJHpHMC1By2i3hgFOhKHWKAFxfaGSc34P0xIeO3RA7aGY+V2m\nlMiD/FT6I32rNwS4OOo9taOBiRBjLDC/Svw8MJySYW6/X5emVtKDaRg65FIHJB5h\ng1/OcHNuXW5JKCaTB0BfHwHUOakqy8wPJqsrQXIN4aK8DOUTSMwpHDOvAoGBAKGX\n6hTLBkO1tQw/2p7S7gLfueN5wkX2FO5Pk0VpNz4KUsi5OV/+nhkrCkOd4e+IbCo8\nbaN6BAqfLVBcqDYL+pn4Qsk78F6dI7MRNnx/GSNdw1MnbFi0Kpai3MqBsqMXlZuN\nULpUOMVRk/TeN7AWM+7jxh3jFfDafFEohQl77UXHAoGBAIeVHZPjVFp707+gb4yS\nvwdpOkv8z0GV6ScLdTkWVlu0q3ZBG1Tqjys6e7qfNkshjcNX8I1MMCAdjlSGl1fN\nvRySxivz+OIMmm89njgRRxXYpOvav682kUyAZClGMqtI0aqwNCyTSUpUMau6iE5Y\nmxlOOgnTa0XljtkdYFLH3L9M\n-----END PRIVATE KEY-----\n"
+            - GOOGLE_CLOUD_CLIENT_EMAIL=gcs-access@pdpa-dev.iam.gserviceaccount.com
+            - GOOGLE_CLOUD_CLIENT_ID=111463569474272661186
+            - GOOGLE_CLOUD_AUTH_URI=https://accounts.google.com/o/oauth2/auth
+            - GOOGLE_CLOUD_TOKEN_URI=https://oauth2.googleapis.com/token
+            - GOOGLE_CLOUD_AUTH_PROVIDER_CERT_URL=https://www.googleapis.com/oauth2/v1/certs
+            - GOOGLE_CLOUD_CLIENT_CERT_URL=https://www.googleapis.com/robot/v1/metadata/x509/gcs-access%40pdpa-dev.iam.gserviceaccount.com
+            - GOOGLE_CLOUD_STORAGE_BUCKET=bucket-pdpa-dev
+            - GOOGLE_CLOUD_PROJECT_ID=pdpa-dev
+            - FRONT_END_URL=https://app-dev.themis-technology.com/
+            - JSON=./pdpa-dev_gcs-access.json
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: backend_prod:local
+    ports:
+      - '7200:7200'
+    volumes:
+      - .:/nodec-
+    restart: always
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - 1433:1433
+    volumes:
+      - ~/apps/mssql/data:/var/lib/mssqlql/data
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=mssql1Ipw

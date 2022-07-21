@@ -1,7 +1,6 @@
 const db = require("../config/db");
 const conn = require("../config/mongodb");
 
-
 exports.get = async (req, res) => {
   await conn.connect();
   const log = await conn
@@ -17,7 +16,6 @@ exports.get = async (req, res) => {
     data: log,
   });
 };
-
 
 exports.insertExample = async (req, res) => {
   try {
@@ -105,7 +103,6 @@ exports.getall = async (req, res) => {
     console.log(doc);
   }
 
-
   res.send({
     data: log,
   });
@@ -122,7 +119,6 @@ exports.getId = async (req, res) => {
     .find(query)
     .toArray();
 
-
   res.send({
     data: log,
   });
@@ -134,14 +130,16 @@ exports.insertAttendance = async (req, res) => {
     const event = {
       anSEnrollNumber: req.body.anSEnrollNumber,
       anVerifyMode: req.body.anVerifyMode,
-      anInOutMode:req.body.anInOutMode,
-      start: moment(req.body.anIanLogDatenOutMode).toDate(),
-      astrDeviceIP:req.body.astrDeviceIP,
+      anInOutMode: req.body.anInOutMode,
+      anIanLogDatenOutMode: req.body.anIanLogDatenOutMode,
+      date: moment(req.body.anIanLogDatenOutMode).format("DD:MM:YYYY"),
+      time: moment(req.body.anIanLogDatenOutMode).format("HH:MM"),
+      astrDeviceIP: req.body.astrDeviceIP,
       anDevicePort: req.body.anDevicePort,
-      anDeviceID:req.body.anDeviceID,
-      astrSerialNo:req.body.astrSerialNo,
-      astrRootIP:req.body.astrRootIP
-
+      anDeviceID: req.body.anDeviceID,
+      astrSerialNo: req.body.astrSerialNo,
+      astrRootIP: req.body.astrRootIP,
+      company_id: req.body.company_id,
     };
     await conn.connect();
     await conn
@@ -150,61 +148,71 @@ exports.insertAttendance = async (req, res) => {
       .insertOne(event, async (err, result) => {
         if (err) {
           console.log(err);
-        } if(result) {
-          
-          console.log(result)
-          const Employess = await conn
+        }
+        if (result) {
+          await conn
             .db("logAttendance")
             .collection("Employess")
-            .findOne({ anSEnrollNumber: event.anSEnrollNumber });
-          if (Employess.linetoken == null) {
-            const lineNotify = require("line-notify-nodejs")(
-              `QPWB8vQZCnPPB638Gii1Ur9g3MmZ02u1jPDs4s4bzDH`
-            );
-            await lineNotify
-              .notify({
-                message: `${Employess.company}
+            .findOneAndUpdate(
+              { anSEnrollNumber: req.body.anSEnrollNumber },
+              { $set: { stamp: true } },
+              async (err, result) => {
+                if (err) {
+                  res.send(err);
+                }
+                if (result) {
+                  const Employess = await conn
+                    .db("logAttendance")
+                    .collection("Employess")
+                    .findOne({ anSEnrollNumber: event.anSEnrollNumber });
+                  if (Employess.linetoken == null) {
+                    const lineNotify = require("line-notify-nodejs")(
+                      `X3IJzb8yQoEftREDZ5y2vznzVr0TRJWog2ESj7ym3Yw`
+                    );
+                    await lineNotify
+                      .notify({
+                        message: `${Employess.company}
 คุณ : ${Employess.name} 
 แผนก : ${Employess.organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format('DD/MM/YY')}
-เวลา : ${moment(event.anIanLogDatenOutMode).format('HH:MM')}
+วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
+เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:MM")}
 ดูสรุป : www.HIPezline.co.th`,
-              })
-              .then((result) => {
-           
-                res.send(result);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
-          if (Employess.linetoken !== null) {
-            const lineNotify = require("line-notify-nodejs")(
-              `${Employess.linetoken}`
-            );
-            await lineNotify
-              .notify({
-                message: `${Employess.company}
+                      })
+                      .then((result) => {
+                        res.send(result);
+                      })
+                      .catch((err) => {
+                        res.send(err);
+                      });
+                  }
+                  if (Employess.linetoken !== null) {
+                    const lineNotify = require("line-notify-nodejs")(
+                      `X3IJzb8yQoEftREDZ5y2vznzVr0TRJWog2ESj7ym3Yw`
+                    );
+                    await lineNotify
+                      .notify({
+                        message: `${Employess.company}
 คุณ : ${Employess.name} 
 แผนก : ${Employess.organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format('DD/MM/YY')}
-เวลา : ${moment(event.anIanLogDatenOutMode).format('HH:MM')}
+วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
+เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:MM")}
 ดูสรุป : www.HIPezline.co.th`,
-              })
-              .then((result) => {
-                res.send(result);
-             
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
+                      })
+                      .then((result) => {
+                        res.send(result);
+                      })
+                      .catch((err) => {
+                        res.send(err);
+                      });
+                  }
+                }
+              }
+            );
         }
       });
   } catch (error) {
-    console.log(error);
+    res.send(error);
   }
 };
-

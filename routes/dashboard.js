@@ -7,4 +7,7 @@ module.exports = function (app) {
   app.get("/distinct", dashboard.distinct);
   app.get("/notstamp", dashboard.notstamp);
   app.get("/stamp", dashboard.stamp);
+  app.get("/autoupdate",dashboard.autoupdate)
+  app.get("/countEmployees",dashboard.countEmployees)
+
 };

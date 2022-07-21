@@ -20,7 +20,7 @@ exports.register = async (req, res) => {
     }
 
 } catch (error) {
-    console.log(error)
+    res.send(error)
 }
 };
 exports.login = async (req, res) => {
@@ -30,7 +30,7 @@ exports.login = async (req, res) => {
     `select * from dbo.USERS WHERE email = '${email}';`,
     (err, result) => {
               if(err){
-          console.log(err)
+          res.send(err)
         }
 
       if (result.recordset[0].password !== req.body.password) {
@@ -38,6 +38,7 @@ exports.login = async (req, res) => {
             status:400,
           message: "ชื่อหรือรหัสผ่านไม่ถูกต้อง",
         });
+        return
       }
       if (result.recordset[0].password == req.body.password) {
         const token = jwt.sign(

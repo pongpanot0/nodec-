@@ -96,54 +96,33 @@ exports.notstamp = async (req, res) => {
   // Database reference
   const connect = conn.db("logAttendance");
   const log = connect.collection("log");
-  // Connect database to connection
   const collection = connect.collection("Employess");
+  // Connect database to connection
 
   // class key
-  const lm = await log
-    .aggregate([
-      { $match: { company_id: "1", time: null } },
-      {
-        $group: {
-          _id: {
-            name: "$log",
-            anSEnrollNumber: "$anSEnrollNumber",
-          },
-        },
-      },
-      {
-        $lookup: {
-          from: "log",
-          localField: "_id.anSEnrollNumber",
-          foreignField: "anSEnrollNumber",
-          as: "fileList",
-        },
-      },
-      {
-        $lookup: {
-          from: "Employess",
-          localField: "_id.anSEnrollNumber",
-          foreignField: "anSEnrollNumber",
-          as: "fileList2",
-        },
-      },
-      {
-        $project: {
-          employess:{ $arrayElemAt: ["$fileList2", 0] },
-          start: { $arrayElemAt: ["$fileList", 0] },
-          last: { $arrayElemAt: ["$fileList", -1] },
-          otherField:1,
-        },
-      },
-    ])
-    .toArray();
+  const lm = await collection.find({ company_id: "1", stamp: false }).toArray();
 
   res.send({
     count: lm.length,
     data: lm,
   });
 };
+exports.countEmployees = async (req, res) => {
+  conn.connect();
 
+  // Database reference
+  const connect = conn.db("logAttendance");
+  const log = connect.collection("log");
+  const collection = connect.collection("Employess");
+  // Connect database to connection
+
+  // class key
+  const lm = await collection.find({ company_id: "1" }).toArray();
+
+  res.send({
+    count: lm.length,
+  });
+};
 exports.stamp = async (req, res) => {
   conn.connect();
 
@@ -156,7 +135,12 @@ exports.stamp = async (req, res) => {
   // class key
   const lm = await log
     .aggregate([
-      { $match: { company_id: "1", time: "22/07/65" } },
+      {
+        $match: {
+          company_id: "1",
+          date: moment(new Date()).format("DD:MM:YYYY"),
+        },
+      },
       {
         $group: {
           _id: {
@@ -183,9 +167,9 @@ exports.stamp = async (req, res) => {
       },
       {
         $project: {
-          employess:"$fileList2",
+          employess: "$fileList2",
           start: { $arrayElemAt: ["$fileList", 0] },
-          otherField:1,
+          otherField: 1,
           last: { $arrayElemAt: ["$fileList", -1] },
         },
       },
@@ -196,4 +180,17 @@ exports.stamp = async (req, res) => {
     count: lm.length,
     data: lm,
   });
+};
+exports.autoupdate = async (req, res) => {
+  conn.connect();
+  const connect = conn.db("logAttendance");
+  const collection = connect.collection("Employess");
+  const col = await collection.updateMany(
+    {},
+    { $set: { stamp: false } },
+    false,
+    true
+  );
+  res.send(col);
+  console.log(col)
 };
