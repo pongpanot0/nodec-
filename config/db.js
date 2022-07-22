@@ -6,7 +6,11 @@ var connection = {
     server:"119.59.97.193",
     database:"ATTSENDLINE",
     trustServerCertificate: true,
-
+    options: {
+        cryptoCredentialsDetails: {
+            minVersion: 'TLSv1'
+        }
+    }
 }
 
 

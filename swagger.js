@@ -1,10 +1,11 @@
 const swaggerAutogen = require('swagger-autogen')()
+var fs = require("fs");
 const doc = {
   info: {
     title: 'My API',
     description: 'Description',
   },
-  host: 'localhost:8080',
+  host: '192.168.4.107:8080',
   schemes: ['http'],
 };
 const swaggerUi = require('swagger-ui-express')
@@ -13,8 +14,9 @@ const outputFile = './swagger_output.json'
 
 fs.readdirSync("routes").forEach(function (file) {
 if (file[0] == ".") return;
-var routeName = file.substr(0, file.indexOf("."));
-const endpointsFiles = ["./routes/" + routeName]
+
+const endpointsFiles = ["./routes/" + 'authen.js',"./routes/" + 'dashboard.js',"./routes/" + 'attendance.js']
+
 swaggerAutogen(outputFile, endpointsFiles,doc)
 });
 

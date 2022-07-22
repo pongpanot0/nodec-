@@ -146,6 +146,7 @@ exports.stamp = async (req, res) => {
           _id: {
             name: "$log",
             anSEnrollNumber: "$anSEnrollNumber",
+            date: "$date",
           },
         },
       },
@@ -155,6 +156,14 @@ exports.stamp = async (req, res) => {
           localField: "_id.anSEnrollNumber",
           foreignField: "anSEnrollNumber",
           as: "fileList",
+          pipeline: [
+            { $match: { date: moment(new Date()).format("DD:MM:YYYY") } },
+            {
+              $sort: {
+                "log.date": -1,
+              },
+            },
+          ],
         },
       },
       {
@@ -181,6 +190,95 @@ exports.stamp = async (req, res) => {
     data: lm,
   });
 };
+exports.exportdate = async (req, res) => {
+  conn.connect();
+
+  // Database reference
+  const connect = conn.db("logAttendance");
+  const log = connect.collection("log");
+  // Connect database to connection
+  const collection = connect.collection("Employess");
+  const date = req.params.date;
+  // class key
+  const lm = await collection
+    .aggregate([
+      {
+        $match: {
+          company_id: "1",
+        },
+      },
+      {
+        $group: {
+          _id: {
+            anSEnrollNumber: "$anSEnrollNumber",
+            date: "$date",
+            name:"$name"
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "log",
+          localField: "_id.anSEnrollNumber",
+          foreignField: "anSEnrollNumber",
+          as: "fileList",
+          pipeline: [
+            {
+              $match: {
+                monthReport: date,
+              },
+            },
+          ],
+        },
+      },
+
+      {
+        $project: {
+          log: "$fileList",
+        },
+      },
+    ])
+    .toArray();
+
+  res.send({
+    count: lm.length,
+    data: lm,
+  });
+};
+exports.monthReport = async (req, res) => {
+  conn.connect();
+
+  // Database reference
+  const connect = conn.db("logAttendance");
+  const log = connect.collection("log");
+  // Connect database to connection
+  const collection = connect.collection("Employess");
+
+  // class key
+  const lm = await log
+    .aggregate([
+      {
+        $match: {
+          company_id: "1",
+          month: {
+            $exists: true,
+            $ne: null,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { month: "$month", monthReport: "$monthReport" },
+        },
+      },
+    ])
+    .toArray();
+
+  res.send({
+    count: lm.length,
+    data: lm,
+  });
+};
 exports.autoupdate = async (req, res) => {
   conn.connect();
   const connect = conn.db("logAttendance");
@@ -192,5 +290,5 @@ exports.autoupdate = async (req, res) => {
     true
   );
   res.send(col);
-  console.log(col)
+  console.log(col);
 };

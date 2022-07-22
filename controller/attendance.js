@@ -132,8 +132,11 @@ exports.insertAttendance = async (req, res) => {
       anVerifyMode: req.body.anVerifyMode,
       anInOutMode: req.body.anInOutMode,
       anIanLogDatenOutMode: req.body.anIanLogDatenOutMode,
-      date: moment(req.body.anIanLogDatenOutMode).format("DD:MM:YYYY"),
-      time: moment(req.body.anIanLogDatenOutMode).format("HH:MM"),
+      date: moment(new Date()).format("DD:MM:YYYY"),
+      time: moment(new Date()).format("hh:mm"),
+      month:moment(new Date()).format("MM:YYYY"),
+      monthReport:moment(new Date()).format("MM:YYYY").toString().replace(":", ''),
+      year:moment(new Date()).format("YYYY"),
       astrDeviceIP: req.body.astrDeviceIP,
       anDevicePort: req.body.anDevicePort,
       anDeviceID: req.body.anDeviceID,
@@ -141,6 +144,7 @@ exports.insertAttendance = async (req, res) => {
       astrRootIP: req.body.astrRootIP,
       company_id: req.body.company_id,
     };
+    console.log(event)
     await conn.connect();
     await conn
       .db("logAttendance")
