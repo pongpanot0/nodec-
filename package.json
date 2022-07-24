@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "Product":"nodemon -x 'node index.js || touch index.js'",
+    "Product": "nodemon -x 'node index.js || touch index.js'",
     "start": "nodemon  index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "swagger":"node swagger.js"
+    "swagger": "node swagger.js"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +25,8 @@
     "jsonwebtoken": "^8.5.1",
     "line-notify-nodejs": "^1.0.1",
     "moment": "^2.29.4",
+    "mongodb": "^4.8.0",
+    "mongoose": "^6.4.6",
     "mssql": "^8.1.2",
     "mysql2": "^2.3.3",
     "node-cron": "^3.0.1",
