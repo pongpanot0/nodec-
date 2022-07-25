@@ -134,9 +134,12 @@ exports.insertAttendance = async (req, res) => {
       anIanLogDatenOutMode: req.body.anIanLogDatenOutMode,
       date: moment(new Date()).format("DD:MM:YYYY"),
       time: moment(new Date()).format("hh:mm"),
-      month:moment(new Date()).format("MM:YYYY"),
-      monthReport:moment(new Date()).format("MM:YYYY").toString().replace(":", ''),
-      year:moment(new Date()).format("YYYY"),
+      month: moment(new Date()).format("MM:YYYY"),
+      monthReport: moment(new Date())
+        .format("MM:YYYY")
+        .toString()
+        .replace(":", ""),
+      year: moment(new Date()).format("YYYY"),
       astrDeviceIP: req.body.astrDeviceIP,
       anDevicePort: req.body.anDevicePort,
       anDeviceID: req.body.anDeviceID,
@@ -144,7 +147,7 @@ exports.insertAttendance = async (req, res) => {
       astrRootIP: req.body.astrRootIP,
       company_id: req.body.company_id,
     };
-    console.log(event)
+    console.log(event);
     await conn.connect();
     await conn
       .db("logAttendance")
@@ -154,66 +157,76 @@ exports.insertAttendance = async (req, res) => {
           console.log(err);
         }
         if (result) {
-          await conn
-            .db("logAttendance")
-            .collection("Employess")
-            .findOneAndUpdate(
-              { anSEnrollNumber: req.body.anSEnrollNumber },
-              { $set: { stamp: true } },
-              async (err, result) => {
-                if (err) {
-                  res.send(err);
+          let update = `update userinfo set Stamp = 0 where  company_id =${event.company_id} and Badgenumber=${event.anSEnrollNumber} `;
+          db.query(update, async (err, result) => {
+            if (err) {
+              res.send(err);
+            }
+            if (result) {
+              let user = `select u.*,c.* from userinfo u  LEFT outer JOIN company c on (u.company_id = c.company_id) where  u.company_id =${event.company_id} and u.Badgenumber=${event.anSEnrollNumber}`
+              db.query(user,async(err,result)=>{
+                if(err){
+                  console.log(err)
                 }
-                if (result) {
-                  const Employess = await conn
-                    .db("logAttendance")
-                    .collection("Employess")
-                    .findOne({ anSEnrollNumber: event.anSEnrollNumber });
-                  if (Employess.linetoken == null) {
-                    const lineNotify = require("line-notify-nodejs")(
-                      `X3IJzb8yQoEftREDZ5y2vznzVr0TRJWog2ESj7ym3Yw`
-                    );
-                    await lineNotify
-                      .notify({
-                        message: `${Employess.company}
-คุณ : ${Employess.name} 
-แผนก : ${Employess.organize} 
+                if(result){
+                  console.log(result)
+
+                  let Name = result[0].Name
+                  let organize = result[0].street
+                  let company_id = result[0].company_name
+                  let sendline = `select linetoken from company where company_id =${event.company_id}`;
+                  db.query(sendline, async (err, result) => {
+                    if (err) {
+                      console.log(err);
+                    }
+                    if (result.linetoken == null) {
+                      const lineNotify = require("line-notify-nodejs")(
+                        `${result[0].linetoken}`
+                      );
+                      await lineNotify
+                        .notify({
+                          message: `${company_id}
+คุณ : ${Name} 
+แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
 เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:MM")}
 ดูสรุป : www.HIPezline.co.th`,
-                      })
-                      .then((result) => {
-                        res.send(result);
-                      })
-                      .catch((err) => {
-                        res.send(err);
-                      });
-                  }
-                  if (Employess.linetoken !== null) {
-                    const lineNotify = require("line-notify-nodejs")(
-                      `X3IJzb8yQoEftREDZ5y2vznzVr0TRJWog2ESj7ym3Yw`
-                    );
-                    await lineNotify
-                      .notify({
-                        message: `${Employess.company}
-คุณ : ${Employess.name} 
-แผนก : ${Employess.organize} 
+                        })
+                        .then((result) => {
+                          res.send(result);
+                        })
+                        .catch((err) => {
+                          res.send(err);
+                        });
+                    }
+                    if (result.linetoken !== null) {
+                      const lineNotify = require("line-notify-nodejs")(
+                        `X3IJzb8yQoEftREDZ5y2vznzVr0TRJWog2ESj7ym3Yw`
+                      );
+                      await lineNotify
+                        .notify({
+                          message: `${company_id}
+คุณ : ${Name} 
+แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
 เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:MM")}
 ดูสรุป : www.HIPezline.co.th`,
-                      })
-                      .then((result) => {
-                        res.send(result);
-                      })
-                      .catch((err) => {
-                        res.send(err);
-                      });
-                  }
+                        })
+                        .then((result) => {
+                          res.send(result);
+                        })
+                        .catch((err) => {
+                          res.send(err);
+                        });
+                    }
+                  });
                 }
-              }
-            );
+              })
+   
+            }
+          });
         }
       });
   } catch (error) {

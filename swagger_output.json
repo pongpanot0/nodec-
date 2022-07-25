@@ -79,39 +79,6 @@
         }
       }
     },
-    "/getDate": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/postdate": {
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/testapi": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/distinct": {
       "get": {
         "description": "",
@@ -156,17 +123,6 @@
         }
       }
     },
-    "/countEmployees": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/exportdate/{date}": {
       "get": {
         "description": "",
@@ -185,7 +141,18 @@
         }
       }
     },
-    "/monthReport/": {
+    "/monthReport": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/employees": {
       "get": {
         "description": "",
         "parameters": [],
