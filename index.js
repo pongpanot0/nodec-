@@ -36,7 +36,7 @@ const swaggerFile = require('./swagger_output.json')
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 
-console.log(moment(new Date()).format("hh:mm"))
+/* console.log(moment(new Date()).format("hh:mm"))
 console.log(moment(new Date()).format("DD:MM:YYYY"));
 console.log(moment(new Date()).subtract(1, "days").format("DD:MM:YYYY"));
-console.log(moment(new Date()).format("hh:mm:ss"));
+console.log(moment(new Date()).format("hh:mm:ss")); */

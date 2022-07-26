@@ -1,132 +1,18 @@
 const db = require("../config/db");
 const conn = require("../config/mongodb");
-
-exports.get = async (req, res) => {
-  await conn.connect();
-  const log = await conn
-    .db("logAttendance")
-    .collection("log")
-    .find({})
-    .limit(10)
-    .toArray();
-
-  console.log(log.length);
-  res.send({
-    count: log.length,
-    data: log,
-  });
-};
-
-exports.insertExample = async (req, res) => {
-  try {
-    await db.connect();
-    const result = await db.query(
-      "select * from dbo.USERINFO ORDER BY USERID OFFSET 0 ROWS"
-    );
-    const user = req.body;
-    await conn.connect();
-
-    var doc = [];
-    const count = result.recordsets;
-    const total = count.Total;
-    console.log(result.recordset.length);
-
-    for (let i = 0; i < result.recordset.length; i++) {
-      const docs = [
-        [
-          {
-            USERID: result.recordset[0]["USERID"],
-            Badgenumber: result.recordset[0]["Badgenumber"],
-            SSN: result.recordset[0]["SSN"],
-            Name: result.recordset[0]["Name"],
-            BIRTHDAY: result.recordset[0]["BIRTHDAY"],
-            HIREDDAY: result.recordset[0]["HIREDDAY"],
-            street: result.recordset[0]["street"],
-            DEFAULTDEPTID: result.recordset[0]["DEFAULTDEPTID"],
-            SECURITYFLAGS: result.recordset[0]["SECURITYFLAGS"],
-            ATT: result.recordset[0]["ATT"],
-            INLATE: result.recordset[0]["INLATE"],
-            OUTEARLY: result.recordset[0]["OUTEARLY"],
-            OVERTIME: result.recordset[0]["OVERTIME"],
-            SEP: result.recordset[0]["SEP"],
-            HOLIDAY: result.recordset[0]["HOLIDAY"],
-            LUNCHDURATION: result.recordset[0]["LUNCHDURATION"],
-            PHOTO: result.recordset[0]["PHOTO"],
-            Notes: result.recordset[0]["Notes"],
-            privilege: result.recordset[0]["privilege"],
-            InheritDeptSch: result.recordset[0]["InheritDeptSch"],
-            InheritDeptSchClass: result.recordset[0]["InheritDeptSchClass"],
-            AutoSchPlan: result.recordset[0]["AutoSchPlan"],
-            MinAutoSchInterval: result.recordset[0]["MinAutoSchInterval"],
-            RegisterOT: result.recordset[0]["RegisterOT"],
-            InheritDeptRule: result.recordset[0]["InheritDeptRule"],
-            EMPRIVILEGE: result.recordset[0]["EMPRIVILEGE"],
-            CardNo: result.recordset[0]["CardNo"],
-          },
-        ],
-      ];
-      console.log(...docs[0]);
-      doc.push(...docs[0]);
-    }
-
-    await conn.db("logAttendance").collection("log").insertMany(doc);
-
-    return res.status(200).send({
-      user: "res",
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-exports.getall = async (req, res) => {
-  id = req.params.id;
-  const pipeline = [
-    { $match: { title: "name" } },
-    {
-      $group: {
-        _id: { name: "$title", start: "$start", _id: "$_id" },
-        count: { $sum: 1 }, //$sum accumulator
-        totalValue: { $sum: "$value" }, //$sum accumulator
-      },
-    },
-  ];
-
-  const query = { Badgenumber: "1" };
-  await conn.connect();
-  const log = await conn
-    .db("logAttendance")
-    .collection("log")
-    .aggregate(pipeline)
-    .toArray();
-  for await (const doc of log) {
-    console.log(doc);
-  }
-
-  res.send({
-    data: log,
-  });
-};
-
-exports.getId = async (req, res) => {
-  id = req.params.id;
-  var ObjectId = require("mongodb").ObjectID;
-  const query = { Badgenumber: "1" };
-  await conn.connect();
-  const log = await conn
-    .db("logAttendance")
-    .collection("log")
-    .find(query)
-    .toArray();
-
-  res.send({
-    data: log,
-  });
-};
 var moment = require("moment");
 const Event = require("../Model/Event");
+var mysql  = require('mysql2');
 exports.insertAttendance = async (req, res) => {
-  try {
+
+    var connection = ({
+      host:'119.59.97.193',
+      user:'root',
+      password:'123456',
+      database: `siam`,
+      port:'33037',
+    })
+    db2 = mysql.createPool(connection); 
     const event = {
       anSEnrollNumber: req.body.anSEnrollNumber,
       anVerifyMode: req.body.anVerifyMode,
@@ -147,7 +33,7 @@ exports.insertAttendance = async (req, res) => {
       astrRootIP: req.body.astrRootIP,
       company_id: req.body.company_id,
     };
-    console.log(event);
+    console.log(event)
     await conn.connect();
     await conn
       .db("logAttendance")
@@ -157,23 +43,22 @@ exports.insertAttendance = async (req, res) => {
           console.log(err);
         }
         if (result) {
-          let update = `update userinfo set Stamp = 0 where  company_id =${event.company_id} and Badgenumber=${event.anSEnrollNumber} `;
-          db.query(update, async (err, result) => {
+          let update = `update employee set Stamp = 0  where Enrollnumber=${event.anSEnrollNumber} `;
+          console.log(update)
+          db2.query(update, async (err, result) => {
             if (err) {
-              res.send(err);
+              console.log(err);
             }
             if (result) {
-              let user = `select u.*,c.* from userinfo u  LEFT outer JOIN company c on (u.company_id = c.company_id) where  u.company_id =${event.company_id} and u.Badgenumber=${event.anSEnrollNumber}`
-              db.query(user,async(err,result)=>{
-                if(err){
-                  console.log(err)
+              let user = `select u.*,c.* from userinfo u  LEFT outer JOIN company c on (u.company_id = c.company_id) where  u.company_id =${event.company_id} and u.Badgenumber=${event.anSEnrollNumber}`;
+              db.query(user, async (err, result) => {
+                if (err) {
+                  console.log(err);
                 }
-                if(result){
-                  console.log(result)
-
-                  let Name = result[0].Name
-                  let organize = result[0].street
-                  let company_id = result[0].company_name
+                if (result) {
+                  let Name = result[0].Name;
+                  let organize = result[0].street;
+                  let company_id = result[0].company_name;
                   let sendline = `select linetoken from company where company_id =${event.company_id}`;
                   db.query(sendline, async (err, result) => {
                     if (err) {
@@ -223,13 +108,10 @@ exports.insertAttendance = async (req, res) => {
                     }
                   });
                 }
-              })
-   
+              });
             }
           });
         }
       });
-  } catch (error) {
-    res.send(error);
-  }
+
 };

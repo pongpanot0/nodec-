@@ -40,9 +40,6 @@ exports.login = async (req, res) => {
       if (err) {
         console.log(err);
       }
-      if (result) {
-        console.log(result);
-      }
       if (result[0].password !== req.body.password) {
         res.send({
           status: 400,
@@ -56,6 +53,7 @@ exports.login = async (req, res) => {
             id: result[0].id,
             Companyid: result[0].Companyid,
             company_name: result[0].company_name,
+            name: result[0].name,
           },
           "zuHbAry/7IrrSQaynzj4c8i8n1iO+CCqzdyeXgRNlfDdQBUJcX9yrYGc98fqp169/ELDSLwtvzebeQ0nf6WkOiXUhOdStRMhPykd/nJwEdmENXThvX9Map7k1gwvXvciZ48DYVc7nntfN82k+ZXSRX2+rTN8YEK3S7tP/0csBYdQwB6OS5FzMHM1gQvK3VX4QAlC6nDbvLsYOBqZcYsDlvlL/Uglw57wNNpLfwjQQC+zXBFvGnROVNLh//yyBl1kB+YmIZXrnkrUkNbLm7QteW+6nXUWZ1gQOEatjCr9NnYxaY4Ve0QABq0sHzifZ65Bz4HVFptun97VS4LSTJmxeQ==",
           { expiresIn: "7d" }
