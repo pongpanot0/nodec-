@@ -79,10 +79,17 @@
         }
       }
     },
-    "/getDate": {
+    "/notstamp/{id}": {
       "get": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -90,54 +97,17 @@
         }
       }
     },
-    "/postdate": {
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/testapi": {
+    "/stamp/{id}": {
       "get": {
         "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
-        }
-      }
-    },
-    "/distinct": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/notstamp": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/stamp": {
-      "get": {
-        "description": "",
-        "parameters": [],
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -146,17 +116,6 @@
       }
     },
     "/autoupdate": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/countEmployees": {
       "get": {
         "description": "",
         "parameters": [],
@@ -185,7 +144,7 @@
         }
       }
     },
-    "/monthReport/": {
+    "/monthReport": {
       "get": {
         "description": "",
         "parameters": [],
@@ -196,10 +155,17 @@
         }
       }
     },
-    "/getattendance/": {
+    "/employees/{id}": {
       "get": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -207,10 +173,26 @@
         }
       }
     },
-    "/getall": {
-      "get": {
+    "/serial": {
+      "post": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "db_name": {
+                  "example": "any"
+                },
+                "serialnumber": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
