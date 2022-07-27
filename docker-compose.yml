@@ -2,7 +2,7 @@ version: '3.9' # optional since v1.27.0
 services:
   docker-backend:
     environment:
-                -
+                -1234
     build:
       context: .
       dockerfile: Dockerfile
@@ -22,3 +22,4 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=mssql1Ipw
+
