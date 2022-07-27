@@ -18,8 +18,8 @@ exports.insertAttendance = async (req, res) => {
         anVerifyMode: req.body.anVerifyMode,
         anInOutMode: req.body.anInOutMode,
         anIanLogDatenOutMode: req.body.anIanLogDatenOutMode,
-        date: moment(new Date()).format("DD:MM:YYYY").toISOString(),
-        time: moment(new Date()).format("hh:mm").toISOString(),
+        date: moment(new Date()).format("DD:MM:YYYY"),
+        time: moment(new Date()).format("HH:MM"),
         month: moment(new Date()).format("MM:YYYY"),
         monthReport: moment(new Date())
           .format("MM:YYYY")
@@ -93,8 +93,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-คุณเข้างานเวลา  : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+คุณเข้างานเวลา  : ${(event.time)}
 ดูสรุป : www.HIPezline.co.th`,
                                 })
                                 .then((result2) => {
@@ -124,8 +124,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-คุณเข้างานเวลา  : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+คุณเข้างานเวลา  : ${(event.time)}
 ดูสรุป : www.HIPezline.co.th`,
                                 })
                                 .then((result2) => {
@@ -142,7 +142,7 @@ exports.insertAttendance = async (req, res) => {
                       else  {
                         if (result[0].ActiveOT === 1) {
                           if (
-                            moment(event.anIanLogDatenOutMode).format("HH:mm") >
+                            (event.time) >
                             moment(result[0].Outwork, "HH:mm")
                               .format("HH")
                               .replace(":", "")
@@ -164,8 +164,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-คุณเข้า Ot เวลา  : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+คุณเข้า Ot เวลา  : ${(event.time)}
 ดูสรุป : www.HIPezline.co.th`,
                                     })
                                     .then((result2) => {
@@ -195,8 +195,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-คุณเข้า Ot เวลา  : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+คุณเข้า Ot เวลา  : ${(event.time)}
 ดูสรุป : www.HIPezline.co.th`,
                                     })
                                     .then((result2) => {
@@ -247,8 +247,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 ดูสรุป : www.HIPezline.co.th`,
                                         })
                                         .then((result2) => {
@@ -265,8 +265,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                         })
@@ -283,8 +283,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 คุณสาย : ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                         })
@@ -335,8 +335,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 ดูสรุป : www.HIPezline.co.th`,
                                         })
                                         .then((result2) => {
@@ -353,8 +353,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                         })
@@ -371,8 +371,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 คุณสาย : ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                         })
@@ -406,8 +406,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 ดูสรุป : www.HIPezline.co.th`,
                                       })
                                       .then((result2) => {
@@ -436,8 +436,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 ดูสรุป : www.HIPezline.co.th`,
                                       })
                                       .then((result2) => {
@@ -489,8 +489,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 ดูสรุป : www.HIPezline.co.th`,
                                     })
                                     .then((result2) => {
@@ -507,8 +507,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                     })
@@ -525,8 +525,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 คุณสาย : ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                     })
@@ -573,8 +573,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 ดูสรุป : www.HIPezline.co.th`,
                                     })
                                     .then((result2) => {
@@ -591,8 +591,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                     })
@@ -609,8 +609,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 คุณสาย : ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                     })
@@ -644,8 +644,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 ดูสรุป : www.HIPezline.co.th`,
                                   })
                                   .then((result2) => {
@@ -674,8 +674,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 ดูสรุป : www.HIPezline.co.th`,
                                   })
                                   .then((result2) => {
@@ -732,8 +732,8 @@ db2.query(sendline, async (err, result2) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 คุณสาย : ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
         })
@@ -750,8 +750,8 @@ db2.query(sendline, async (err, result2) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${moment(event.anIanLogDatenOutMode).format("DD/MM/YY")}
-เวลา : ${moment(event.anIanLogDatenOutMode).format("HH:mm")}
+วันที่ : ${(event.date)}
+เวลา : ${(event.time)}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
         })
