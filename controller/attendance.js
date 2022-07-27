@@ -34,7 +34,7 @@ exports.insertAttendance = async (req, res) => {
         company_id: result[0].db_name,
       };
       let db_name = result[0].db_name;
-      console.log(moment(event.anIanLogDatenOutMode))
+      console.log(moment(event.anIanLogDatenOutMode));
       await conn.connect();
       await conn
         .db("logAttendance")
@@ -83,18 +83,17 @@ exports.insertAttendance = async (req, res) => {
                               res.send(err);
                             }
                             if (result2[0].Linetoken !== null) {
-                              const lineNotify =
-                                require("line-notify-nodejs")(
-                                  `${result2[0].Linetoken}`
-                                );
+                              const lineNotify = require("line-notify-nodejs")(
+                                `${result2[0].Linetoken}`
+                              );
                               await lineNotify
                                 .notify({
                                   message: `${company_id}
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-คุณเข้างานเวลา  : ${(event.time)}
+วันที่ : ${event.date}
+คุณเข้างานเวลา  : ${event.time}
 ดูสรุป : www.HIPezline.co.th`,
                                 })
                                 .then((result2) => {
@@ -114,18 +113,17 @@ exports.insertAttendance = async (req, res) => {
                               res.send(err);
                             }
                             if (result2[0].Linetoken !== null) {
-                              const lineNotify =
-                                require("line-notify-nodejs")(
-                                  `${result2[0].Linetoken}`
-                                );
+                              const lineNotify = require("line-notify-nodejs")(
+                                `${result2[0].Linetoken}`
+                              );
                               await lineNotify
                                 .notify({
                                   message: `${company_id}
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-คุณเข้างานเวลา  : ${(event.time)}
+วันที่ : ${event.date}
+คุณเข้างานเวลา  : ${event.time}
 ดูสรุป : www.HIPezline.co.th`,
                                 })
                                 .then((result2) => {
@@ -137,12 +135,11 @@ exports.insertAttendance = async (req, res) => {
                             }
                           });
                         }
-                        return
-                      }
-                      else  {
+                        return;
+                      } else {
                         if (result[0].ActiveOT === 1) {
                           if (
-                            (event.time) >
+                            event.time >
                             moment(result[0].Outwork, "HH:mm")
                               .format("HH")
                               .replace(":", "")
@@ -164,8 +161,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-คุณเข้า Ot เวลา  : ${(event.time)}
+วันที่ : ${event.date}
+คุณเข้า Ot เวลา  : ${event.time}
 ดูสรุป : www.HIPezline.co.th`,
                                     })
                                     .then((result2) => {
@@ -177,7 +174,7 @@ exports.insertAttendance = async (req, res) => {
                                 }
                               });
                             }
-  
+
                             if (result[0].ActiveLineDep === 1) {
                               let sendline = `select Linetoken from department where Depcode = "${Depcode}"`;
                               db2.query(sendline, async (err, result2) => {
@@ -195,8 +192,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-คุณเข้า Ot เวลา  : ${(event.time)}
+วันที่ : ${event.date}
+คุณเข้า Ot เวลา  : ${event.time}
 ดูสรุป : www.HIPezline.co.th`,
                                     })
                                     .then((result2) => {
@@ -247,8 +244,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 ดูสรุป : www.HIPezline.co.th`,
                                         })
                                         .then((result2) => {
@@ -265,8 +262,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                         })
@@ -283,8 +280,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 คุณสาย : ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                         })
@@ -335,8 +332,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 ดูสรุป : www.HIPezline.co.th`,
                                         })
                                         .then((result2) => {
@@ -353,8 +350,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                         })
@@ -371,8 +368,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 คุณสาย : ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                         })
@@ -399,15 +396,15 @@ exports.insertAttendance = async (req, res) => {
                                       require("line-notify-nodejs")(
                                         `${result2[0].Linetoken}`
                                       );
-  
+
                                     await lineNotify
                                       .notify({
                                         message: `${company_id}
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 ดูสรุป : www.HIPezline.co.th`,
                                       })
                                       .then((result2) => {
@@ -436,8 +433,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 ดูสรุป : www.HIPezline.co.th`,
                                       })
                                       .then((result2) => {
@@ -489,8 +486,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 ดูสรุป : www.HIPezline.co.th`,
                                     })
                                     .then((result2) => {
@@ -507,8 +504,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                     })
@@ -525,8 +522,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 คุณสาย : ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                     })
@@ -573,8 +570,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 ดูสรุป : www.HIPezline.co.th`,
                                     })
                                     .then((result2) => {
@@ -591,8 +588,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                     })
@@ -609,8 +606,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 คุณสาย : ${w3} นาที
 ดูสรุป : www.HIPezline.co.th`,
                                     })
@@ -644,8 +641,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 ดูสรุป : www.HIPezline.co.th`,
                                   })
                                   .then((result2) => {
@@ -674,8 +671,8 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${(event.date)}
-เวลา : ${(event.time)}
+วันที่ : ${event.date}
+เวลา : ${event.time}
 ดูสรุป : www.HIPezline.co.th`,
                                   })
                                   .then((result2) => {

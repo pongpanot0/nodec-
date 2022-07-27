@@ -4,7 +4,7 @@ var app = express();
 var fs = require("fs");
 var multer = require("multer");
 const conn = require("./config/mongodb");
-var upload = multer()
+var upload = multer();
 app.use(bodyParser.json());
 const cors = require("cors");
 app.use(cors({ origin: "*" }));
@@ -13,8 +13,8 @@ app.use(function (req, res, next) {
 });
 app.use(
   bodyParser.urlencoded({
-      limit: "50mb",
-      extended: true,
+    limit: "50mb",
+    extended: true,
   })
 );
 app.use(upload.array());
@@ -24,18 +24,43 @@ fs.readdirSync("routes").forEach(function (file) {
   require("./routes/" + routeName)(app);
 });
 
-
 var moment = require("moment");
 app.listen(8080, () => {
   console.log("server start ");
 });
 
-const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('./swagger_output.json')
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = require("./swagger_output.json");
 
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
+const cron = require("node-cron");
+const db = require("./config/db");
 
+cron.schedule(
+  "0 00 * * *",
+  () => {
+    const mysql = require("mysql2");
+    var connection = {
+      host: "119.59.97.193",
+      user: "root",
+      password: "123456",
+      database: `siam`,
+      port: "33037",
+    };
+    db2 = mysql.createPool(connection);
+    let cs = `update employee set Stamp = 1`;
+    db2.query(cs, async (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      if (result) {
+        console.log(result);
+      }
+    });
+  },
+  { scheduled: true, timezone: "Asia/Bangkok" }
+);
 /* console.log(moment(new Date()).format("hh:mm"))
 console.log(moment(new Date()).format("DD:MM:YYYY"));
 console.log(moment(new Date()).subtract(1, "days").format("DD:MM:YYYY"));

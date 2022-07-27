@@ -26,7 +26,6 @@ exports.employees = async (req, res) => {
   let count = `select * from employee`;
 
   db2.query(count, (err, result) => {
-
     if (err) {
       res.send(err);
     }
@@ -55,7 +54,6 @@ exports.notstamp = async (req, res) => {
       res.send(err);
     }
     if (result) {
-
       res.send({
         count: result.length,
         data: result,
@@ -139,7 +137,7 @@ exports.stamp = async (req, res) => {
 };
 
 exports.exportdate = async (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
   var connection = {
     host: "119.59.97.193",
     user: "root",
@@ -157,7 +155,7 @@ exports.exportdate = async (req, res) => {
   // class key
   let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode)`;
   db2.query(count, async (err, result) => {
-    console.log(result)
+    console.log(result);
     if (err) {
       res.send(err);
     }
@@ -222,7 +220,7 @@ exports.exportdate = async (req, res) => {
 
 exports.monthReport = async (req, res) => {
   conn.connect();
-  const id =req.params.id
+  const id = req.params.id;
   // Database reference
   const connect = conn.db("logAttendance");
   const log = connect.collection("log");
@@ -254,18 +252,6 @@ exports.monthReport = async (req, res) => {
     data: lm,
   });
 };
-exports.autoupdate = async (req, res) => {
-  conn.connect();
-  const connect = conn.db("logAttendance");
-  const collection = connect.collection("Employess");
-  const col = await collection.updateMany(
-    {},
-    { $set: { stamp: false } },
-    false,
-    true
-  );
-  res.send(col);
-};
 exports.serial = async (req, res) => {
   let db_name = req.body.db_name;
   let serialnumber = req.body.serialnumber;
@@ -290,4 +276,31 @@ exports.serial = async (req, res) => {
       });
     }
   });
+};
+exports.setting = async (req, res) => {
+  let id = req.params.id;
+  var connection = {
+    host: "119.59.97.193",
+    user: "root",
+    password: "123456",
+    database: `${id}`,
+    port: "33037",
+  };
+  db2 = mysql.createPool(connection);
+  let count = `select * from setting`;
+
+
+    db2.query(count, (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      if (result) {
+        console.log(result);
+        res.send({
+          count: result.length,
+          data: result,
+        });
+      }
+    });
+  
 };
