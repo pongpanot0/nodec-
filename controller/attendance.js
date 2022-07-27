@@ -18,8 +18,8 @@ exports.insertAttendance = async (req, res) => {
         anVerifyMode: req.body.anVerifyMode,
         anInOutMode: req.body.anInOutMode,
         anIanLogDatenOutMode: req.body.anIanLogDatenOutMode,
-        date: moment(new Date()).format("DD:MM:YYYY"),
-        time: moment(new Date()).format("hh:mm"),
+        date: moment(new Date()).format("DD:MM:YYYY").toISOString(),
+        time: moment(new Date()).format("hh:mm").toISOString(),
         month: moment(new Date()).format("MM:YYYY"),
         monthReport: moment(new Date())
           .format("MM:YYYY")
@@ -34,6 +34,7 @@ exports.insertAttendance = async (req, res) => {
         company_id: result[0].db_name,
       };
       let db_name = result[0].db_name;
+      console.log(moment(event.anIanLogDatenOutMode))
       await conn.connect();
       await conn
         .db("logAttendance")
