@@ -79,10 +79,17 @@
         }
       }
     },
-    "/distinct": {
+    "/notstamp/{id}": {
       "get": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -90,21 +97,17 @@
         }
       }
     },
-    "/notstamp": {
+    "/stamp/{id}": {
       "get": {
         "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
-        }
-      }
-    },
-    "/stamp": {
-      "get": {
-        "description": "",
-        "parameters": [],
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -152,10 +155,17 @@
         }
       }
     },
-    "/employees": {
+    "/employees/{id}": {
       "get": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -163,32 +173,26 @@
         }
       }
     },
-    "/Exportlogs": {
-      "get": {
+    "/serial": {
+      "post": {
         "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "db_name": {
+                  "example": "any"
+                },
+                "serialnumber": {
+                  "example": "any"
+                }
+              }
+            }
           }
-        }
-      }
-    },
-    "/getattendance/": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/getall": {
-      "get": {
-        "description": "",
-        "parameters": [],
+        ],
         "responses": {
           "200": {
             "description": "OK"

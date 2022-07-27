@@ -1,6 +1,6 @@
 const db = require("../config/db");
 var jwt = require("jsonwebtoken");
-exports.register =  (req, res) => {
+exports.register = (req, res) => {
   let name = req.body.name;
   let email = req.body.email;
   let password = req.body.password;
@@ -35,8 +35,9 @@ exports.register =  (req, res) => {
 exports.login = async (req, res) => {
   let email = req.body.email;
   db.query(
-    `select u.*,c.* from USERS u LEFT outer JOIN company c on (u.Companyid = c.company_id) WHERE email = '${email}'`,
+    `select * from USERS  WHERE email = '${email}'`,
     (err, result) => {
+      console.log(result);
       if (err) {
         console.log(err);
       }

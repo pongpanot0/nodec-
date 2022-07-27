@@ -90,7 +90,6 @@ exports.Exportlogs = async (req, res) => {
             {
               Badgenumber: output[i].Badgenumber,
               name: output[i].Name,
-
               วันที่: output[i].start._id,
               เวลาเข้างาน: output[i].start.start,
               เวลาออกงาน: output[i].start.last,

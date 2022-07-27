@@ -2,7 +2,7 @@ const db = require("../config/db");
 const conn = require("../config/mongodb");
 const Event = require("../Model/Event");
 const moment = require("moment");
-var mysql  = require('mysql2');
+var mysql = require("mysql2");
 exports.getGraph = async (req, res) => {
   await conn.connect();
   const log = await conn.db("logAttendance").collection("log").distinct("Name");
@@ -12,29 +12,21 @@ exports.getGraph = async (req, res) => {
   });
 };
 
-exports.distinct = async (req, res) => {
-  conn.connect();
-
-  // Database reference
-  const connect = conn.db("logAttendance");
-
-  // Connect database to connection
-  const collection = connect.collection("log");
-
-  // class key
-  collection
-    .distinct("anSEnrollNumber", { company_id: "1" })
-    .then((ans) => {
-      // Printing distinct value of class key
-      res.send({ count: ans.length });
-    })
-    .catch((err) => {
-      console.log(err.Message);
-    });
-};
 exports.employees = async (req, res) => {
-  let count = `select * from userinfo where company_id = 1`;
-  db.query(count, (err, result) => {
+  let id = req.params.id;
+  var connection = {
+    host: "119.59.97.193",
+    user: "root",
+    password: "123456",
+    database: `${id}`,
+    port: "33037",
+  };
+  db2 = mysql.createConnection(connection);
+
+  let count = `select * from employee`;
+
+  db2.query(count, (err, result) => {
+
     if (err) {
       res.send(err);
     }
@@ -47,12 +39,23 @@ exports.employees = async (req, res) => {
   });
 };
 exports.notstamp = async (req, res) => {
-  let count = `select * from userinfo where company_id = 1 and Stamp = 1`;
-  db.query(count, (err, result) => {
+  let id = req.params.id;
+  var connection = {
+    host: "119.59.97.193",
+    user: "root",
+    password: "123456",
+    database: `${id}`,
+    port: "33037",
+  };
+  db2 = mysql.createConnection(connection);
+
+  let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 1`;
+  db2.query(count, (err, result) => {
     if (err) {
       res.send(err);
     }
     if (result) {
+
       res.send({
         count: result.length,
         data: result,
@@ -61,17 +64,16 @@ exports.notstamp = async (req, res) => {
   });
 };
 exports.stamp = async (req, res) => {
-  let id = req.params.id
-  var connection = ({
-    host:'119.59.97.193',
-    user:'root',
-    password:'123456',
+  let id = req.params.id;
+  var connection = {
+    host: "119.59.97.193",
+    user: "root",
+    password: "123456",
     database: `${id}`,
-    port:'33037',
-  })
-  db2 = mysql.createPool(connection); 
-
-  let count = `select * from employee where Stamp=0`;
+    port: "33037",
+  };
+  db2 = mysql.createPool(connection);
+  let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 0`;
   db2.query(count, async (err, result) => {
     if (err) {
       res.send(err);
@@ -89,7 +91,7 @@ exports.stamp = async (req, res) => {
         .aggregate([
           {
             $match: {
-              company_id: "1",
+              company_id: `${id}`,
               date: moment(new Date()).format("DD:MM:YYYY"),
             },
           },
@@ -137,6 +139,15 @@ exports.stamp = async (req, res) => {
 };
 
 exports.exportdate = async (req, res) => {
+  const id = req.params.id
+  var connection = {
+    host: "119.59.97.193",
+    user: "root",
+    password: "123456",
+    database: `${id}`,
+    port: "33037",
+  };
+  db2 = mysql.createPool(connection);
   conn.connect();
   // Database reference
   const connect = conn.db("logAttendance");
@@ -144,8 +155,9 @@ exports.exportdate = async (req, res) => {
   // Connect database to connection
   const date = req.params.date;
   // class key
-  let count = `select * from userinfo where company_id = 1`;
-  db.query(count, async (err, result) => {
+  let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode)`;
+  db2.query(count, async (err, result) => {
+    console.log(result)
     if (err) {
       res.send(err);
     }
@@ -154,8 +166,8 @@ exports.exportdate = async (req, res) => {
         .aggregate([
           {
             $match: {
-              company_id: "1",
-              monthReport:date
+              company_id: id,
+              monthReport: date,
             },
           },
 
@@ -197,7 +209,7 @@ exports.exportdate = async (req, res) => {
       const output = result.map((obj1) =>
         Object.assign(
           obj1,
-          lm.find((o2) => obj1.Badgenumber === o2._id.anSEnrollNumber)
+          lm.find((o2) => obj1.Enrollnumber === o2._id.anSEnrollNumber)
         )
       );
 
@@ -210,7 +222,7 @@ exports.exportdate = async (req, res) => {
 
 exports.monthReport = async (req, res) => {
   conn.connect();
-
+  const id =req.params.id
   // Database reference
   const connect = conn.db("logAttendance");
   const log = connect.collection("log");
@@ -222,7 +234,7 @@ exports.monthReport = async (req, res) => {
     .aggregate([
       {
         $match: {
-          company_id: "1",
+          company_id: id,
           month: {
             $exists: true,
             $ne: null,
@@ -253,4 +265,29 @@ exports.autoupdate = async (req, res) => {
     true
   );
   res.send(col);
+};
+exports.serial = async (req, res) => {
+  let db_name = req.body.db_name;
+  let serialnumber = req.body.serialnumber;
+  let same = `SELECT COUNT(serialnumber) AS serialnumber FROM serail WHERE serialnumber='${serialnumber}'`;
+  let count = `insert into serail (db_name,serialnumber)  VALUES ('${db_name}','${serialnumber}')`;
+  db.query(same, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+    if (result) {
+      db.query(count, (err, result) => {
+        if (err) {
+          res.send(err);
+        }
+        if (result) {
+          console.log(result);
+          res.send({
+            count: result.length,
+            data: result,
+          });
+        }
+      });
+    }
+  });
 };
