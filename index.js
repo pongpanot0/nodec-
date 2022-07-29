@@ -47,8 +47,11 @@ cron.schedule(
       password: "123456",
       database: `siam`,
       port: "33037",
+      connectionLimit: 10,
     };
+    let db2=null
     db2 = mysql.createPool(connection);
+    
     let cs = `update employee set Stamp = 1`;
     db2.query(cs, async (err, result) => {
       if (err) {

@@ -2,7 +2,7 @@ const dashboard = require("../controller/dashboard");
 module.exports = function (app) {
   app.get("/getGraph", dashboard.getGraph);
   app.get("/notstamp/:id", dashboard.notstamp);
-  app.get("/stamp/:id", dashboard.stamp);
+  app.get("/stamp/:id/:limit/:offset", dashboard.stamp);
   app.get("/exportdate/:date/:id",dashboard.exportdate)
   app.get("/monthReport/:id",dashboard.monthReport)
   app.get("/employees/:id",dashboard.employees)

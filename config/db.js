@@ -5,6 +5,7 @@ var connection = ({
   password:'123456',
   database: 'user',
   port:'33037',
+  connectionLimit: 1000,
 })
 
 let db=null;
@@ -42,7 +43,7 @@ function handleDisconnect() {
 
 setInterval(function () {
   db.query('SELECT 1');
-}, 120000);
+}, 1200);
 handleDisconnect(); 
 
 

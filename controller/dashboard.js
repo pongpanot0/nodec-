@@ -18,10 +18,12 @@ exports.employees = async (req, res) => {
     host: "119.59.97.193",
     user: "root",
     password: "123456",
-    database: `${id}`,
+    database: `${id.toLowerCase()}`,
     port: "33037",
+    connectionLimit: 10,
   };
-  db2 = mysql.createConnection(connection);
+  let db2 = null;
+  db2 = mysql.createPool(connection);
 
   let count = `select * from employee`;
 
@@ -34,6 +36,7 @@ exports.employees = async (req, res) => {
         count: result.length,
         data: result,
       });
+      db2.end();
     }
   });
 };
@@ -43,10 +46,12 @@ exports.notstamp = async (req, res) => {
     host: "119.59.97.193",
     user: "root",
     password: "123456",
-    database: `${id}`,
+    database: `${id.toLowerCase()}`,
     port: "33037",
+    connectionLimit: 10,
   };
-  db2 = mysql.createConnection(connection);
+  let db2 = null;
+  db2 = mysql.createPool(connection);
 
   let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 1`;
   db2.query(count, (err, result) => {
@@ -58,6 +63,7 @@ exports.notstamp = async (req, res) => {
         count: result.length,
         data: result,
       });
+      db2.end();
     }
   });
 };
@@ -67,11 +73,16 @@ exports.stamp = async (req, res) => {
     host: "119.59.97.193",
     user: "root",
     password: "123456",
-    database: `${id}`,
+    database: `${id.toLowerCase()}`,
     port: "33037",
+    connectionLimit: 10,
   };
+  let db2 = null;
+  let limit = req.params.limit;
+  let offset = req.params.offset;
   db2 = mysql.createPool(connection);
-  let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 0`;
+
+  let count = `select e.*,c.*, (select count(*)  from employee where Active=1) as total , (select count(*)  from employee where Stamp = 0) as total2 from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 0 limit ${limit} offset ${offset}`;
   db2.query(count, async (err, result) => {
     if (err) {
       res.send(err);
@@ -83,13 +94,12 @@ exports.stamp = async (req, res) => {
       const connect = conn.db("logAttendance");
       const log = connect.collection("log");
       // Connect database to connection
-
       // class key
       const lm = await log
         .aggregate([
           {
             $match: {
-              company_id: `${id}`,
+              company_id: `${id.toLowerCase()}`,
               date: moment(new Date()).format("DD:MM:YYYY"),
             },
           },
@@ -102,6 +112,7 @@ exports.stamp = async (req, res) => {
               },
             },
           },
+
           {
             $lookup: {
               from: "log",
@@ -129,9 +140,12 @@ exports.stamp = async (req, res) => {
         )
       );
       res.send({
+        count3: result[0].total2,
+        count2: result[0].total,
         count: output.length,
         data: output,
       });
+      db2.end();
     }
   });
 };
@@ -142,9 +156,11 @@ exports.exportdate = async (req, res) => {
     host: "119.59.97.193",
     user: "root",
     password: "123456",
-    database: `${id}`,
+    database: `${id.toLowerCase()}`,
     port: "33037",
+    connectionLimit: 10,
   };
+  let db2 = null;
   db2 = mysql.createPool(connection);
   conn.connect();
   // Database reference
@@ -164,7 +180,7 @@ exports.exportdate = async (req, res) => {
         .aggregate([
           {
             $match: {
-              company_id: id,
+              company_id: id.toLowerCase(),
               monthReport: date,
             },
           },
@@ -188,6 +204,7 @@ exports.exportdate = async (req, res) => {
                   $group: {
                     _id: "$date",
                     start: { $first: "$time" },
+                    late: { $first: "$late" },
                     last: { $last: "$time" },
                   },
                 },
@@ -210,10 +227,10 @@ exports.exportdate = async (req, res) => {
           lm.find((o2) => obj1.Enrollnumber === o2._id.anSEnrollNumber)
         )
       );
-
       res.send({
         data: output,
       });
+      db2.end();
     }
   });
 };
@@ -232,7 +249,7 @@ exports.monthReport = async (req, res) => {
     .aggregate([
       {
         $match: {
-          company_id: id,
+          company_id: id.toLowerCase(),
           month: {
             $exists: true,
             $ne: null,
@@ -272,6 +289,7 @@ exports.serial = async (req, res) => {
             count: result.length,
             data: result,
           });
+          db2.end();
         }
       });
     }
@@ -283,24 +301,25 @@ exports.setting = async (req, res) => {
     host: "119.59.97.193",
     user: "root",
     password: "123456",
-    database: `${id}`,
+    database: `${id.toLowerCase()}`,
     port: "33037",
+    connectionLimit: 10,
   };
+  let db2 = null;
   db2 = mysql.createPool(connection);
   let count = `select * from setting`;
 
-
-    db2.query(count, (err, result) => {
-      if (err) {
-        res.send(err);
-      }
-      if (result) {
-        console.log(result);
-        res.send({
-          count: result.length,
-          data: result,
-        });
-      }
-    });
-  
+  db2.query(count, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+    if (result) {
+      console.log(result);
+      res.send({
+        count: result.length,
+        data: result,
+      });
+      db2.end();
+    }
+  });
 };
