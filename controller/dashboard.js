@@ -85,11 +85,10 @@ exports.stamp = async (req, res) => {
   let count = `select e.*,c.*, (select count(*)  from employee where Active=1) as total , (select count(*)  from employee where Stamp = 0) as total2 from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 0 limit ${limit} offset ${offset}`;
   db2.query(count, async (err, result) => {
     if (err) {
-      res.send(err);
+      console.log(err);
     }
     if (result) {
       conn.connect();
-
       // Database reference
       const connect = conn.db("logAttendance");
       const log = connect.collection("log");
@@ -139,12 +138,31 @@ exports.stamp = async (req, res) => {
           lm.find((o2) => obj1.Enrollnumber === o2._id.anSEnrollNumber)
         )
       );
-      res.send({
-        count3: result[0].total2,
-        count2: result[0].total,
-        count: output.length,
-        data: output,
-      });
+      console.log(output);
+      if (
+        output == null ||
+        output == "" ||
+        output == undefined ||
+        output == []
+      ) {
+        res.send({
+          count3: "0",
+          count2: "0",
+          count: output.length,
+          data: output,
+        });
+        return;
+      }
+      if (output !== null) {
+        res.send({
+          count3: result[0].total2,
+          count2: result[0].total,
+          count: output.length,
+          data: output,
+        });
+        return;
+      }
+
       db2.end();
     }
   });
