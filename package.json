@@ -16,6 +16,7 @@
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "cron": "^2.1.0",
+    "csv-parser": "^3.0.0",
     "date-and-time": "^2.4.0",
     "dateformat": "^5.0.3",
     "edge": "^7.10.1",
@@ -40,6 +41,7 @@
     "socket.io": "^4.5.1",
     "swagger-autogen": "^2.21.5",
     "swagger-ui-express": "^4.5.0",
-    "tedious": "^14.6.1"
+    "tedious": "^14.6.1",
+    "xlsx": "^0.18.5"
   }
 }
