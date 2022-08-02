@@ -4,6 +4,7 @@ var app = express();
 var fs = require("fs");
 var multer = require("multer");
 const conn = require("./config/mongodb");
+require("dotenv").config();
 var upload = multer();
 app.use(bodyParser.json());
 const cors = require("cors");
@@ -24,7 +25,7 @@ fs.readdirSync("routes").forEach(function (file) {
   require("./routes/" + routeName)(app);
 });
 
-var moment = require("moment");
+
 app.listen(8080, () => {
   console.log("server start ");
 });
@@ -35,7 +36,6 @@ const swaggerFile = require("./swagger_output.json");
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 const cron = require("node-cron");
-const db = require("./config/db");
 
 cron.schedule(
   "0 00 * * *",
@@ -49,9 +49,9 @@ cron.schedule(
       port: "33037",
       connectionLimit: 10,
     };
-    let db2=null
+    let db2 = null;
     db2 = mysql.createPool(connection);
-    
+
     let cs = `update employee set Stamp = 1`;
     db2.query(cs, async (err, result) => {
       if (err) {
@@ -64,6 +64,7 @@ cron.schedule(
   },
   { scheduled: true, timezone: "Asia/Bangkok" }
 );
+console.log(process.env.FRONT_END_URL);
 /* console.log(moment(new Date()).format("hh:mm"))
 console.log(moment(new Date()).format("DD:MM:YYYY"));
 console.log(moment(new Date()).subtract(1, "days").format("DD:MM:YYYY"));

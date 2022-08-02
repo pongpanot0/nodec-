@@ -1,10 +1,10 @@
 var mysql  = require('mysql2');
 var connection = ({
-  host:'119.59.97.193',
-  user:'root',
-  password:'123456',
-  database: 'user',
-  port:'33037',
+  host:`${process.env.db_host}`,
+  user:`${process.env.db_user}`,
+  password:`${process.env.db_password}`,
+  database:`${process.env.db_database}`,
+  port:`${process.env.db_port}`,
   connectionLimit: 1000,
 })
 

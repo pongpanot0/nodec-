@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "Product": "nodemon -x 'node index.js || touch index.js'",
-    "start": "nodemon  index.js",
+    "start": "set NODE_ENV=dev&& nodemon  index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "swagger": "node swagger.js"
   },
@@ -19,6 +19,7 @@
     "csv-parser": "^3.0.0",
     "date-and-time": "^2.4.0",
     "dateformat": "^5.0.3",
+    "dotenv": "^16.0.1",
     "edge": "^7.10.1",
     "edge-js": "^18.4.0",
     "edge-vb": "^1.0.0",

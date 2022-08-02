@@ -100,7 +100,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 คุณออกงานเวลา  : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                               })
                               .then((result2) => {
                                 res.send(result2);
@@ -129,7 +129,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 คุณออกงานเวลา  : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                               })
                               .then((result2) => {
                                 res.send(result2);
@@ -161,7 +161,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 คุณเข้างานเวลา  : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                 })
                                 .then((result2) => {
                                   res.send(result2);
@@ -191,7 +191,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 คุณเข้างานเวลา  : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                 })
                                 .then((result2) => {
                                   res.send(result2);
@@ -230,7 +230,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 คุณเข้า Ot เวลา  : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                     })
                                     .then((result2) => {
                                       res.send(result2);
@@ -261,7 +261,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 คุณเข้า Ot เวลา  : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                     })
                                     .then((result2) => {
                                       res.send(result2);
@@ -323,7 +323,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 เวลา : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
                                         .then((result2) => {
                                           res.send(result2);
@@ -342,7 +342,7 @@ exports.insertAttendance = async (req, res) => {
 วันที่ : ${event.date}
 เวลา : ${event.time}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
                                         .then((result2) => {
                                           res.send(result2);
@@ -368,7 +368,7 @@ exports.insertAttendance = async (req, res) => {
 วันที่ : ${event.date}
 เวลา : ${event.time}
 คุณสาย : ${w3} นาที
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
                                         .then((result2) => {
                                           res.send(result2);
@@ -420,7 +420,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 เวลา : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
                                         .then((result2) => {
                                           res.send(result2);
@@ -439,7 +439,7 @@ exports.insertAttendance = async (req, res) => {
 วันที่ : ${event.date}
 เวลา : ${event.time}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
                                         .then((result2) => {
                                           res.send(result2);
@@ -457,7 +457,7 @@ exports.insertAttendance = async (req, res) => {
 วันที่ : ${event.date}
 เวลา : ${event.time}
 คุณสาย : ${w3} นาที
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
                                         .then((result2) => {
                                           res.send(result2);
@@ -491,7 +491,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 เวลา : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                       })
                                       .then((result2) => {
                                         res.send(result2);
@@ -521,7 +521,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 เวลา : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                       })
                                       .then((result2) => {
                                         res.send(result2);
@@ -574,7 +574,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 เวลา : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                     })
                                     .then((result2) => {
                                       res.send(result2);
@@ -593,7 +593,7 @@ exports.insertAttendance = async (req, res) => {
 วันที่ : ${event.date}
 เวลา : ${event.time}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                     })
                                     .then((result2) => {
                                       res.send(result2);
@@ -611,7 +611,7 @@ exports.insertAttendance = async (req, res) => {
 วันที่ : ${event.date}
 เวลา : ${event.time}
 คุณสาย : ${w3} นาที
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                     })
                                     .then((result2) => {
                                       res.send(result2);
@@ -658,7 +658,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 เวลา : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                     })
                                     .then((result2) => {
                                       res.send(result2);
@@ -677,7 +677,7 @@ exports.insertAttendance = async (req, res) => {
 วันที่ : ${event.date}
 เวลา : ${event.time}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                     })
                                     .then((result2) => {
                                       res.send(result2);
@@ -695,7 +695,7 @@ exports.insertAttendance = async (req, res) => {
 วันที่ : ${event.date}
 เวลา : ${event.time}
 คุณสาย : ${w3} นาที
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                     })
                                     .then((result2) => {
                                       res.send(result2);
@@ -729,7 +729,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 เวลา : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                   })
                                   .then((result2) => {
                                     res.send(result2);
@@ -759,7 +759,7 @@ exports.insertAttendance = async (req, res) => {
 บันทึกเวลา : @${event.anDeviceID}
 วันที่ : ${event.date}
 เวลา : ${event.time}
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
                                   })
                                   .then((result2) => {
                                     res.send(result2);
@@ -821,7 +821,7 @@ db2.query(sendline, async (err, result2) => {
 วันที่ : ${(event.date)}
 เวลา : ${(event.time)}
 คุณสาย : ${w3} นาที
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
         })
         .then((result2) => {
           res.send(result2);
@@ -839,7 +839,7 @@ db2.query(sendline, async (err, result2) => {
 วันที่ : ${(event.date)}
 เวลา : ${(event.time)}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
-ดูสรุป : www.HIPezline.co.th`,
+ดูสรุป :${process.env.FRONT_END_URL}`,
         })
         .then((result2) => {
           res.send(result2);
