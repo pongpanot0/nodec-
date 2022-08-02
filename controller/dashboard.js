@@ -182,7 +182,6 @@ exports.exportdate = async (req, res) => {
   // class key
   let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode)`;
   db2.query(count, async (err, result) => {
-    console.log(result);
     if (err) {
       res.send(err);
     }
@@ -211,6 +210,12 @@ exports.exportdate = async (req, res) => {
               foreignField: "anSEnrollNumber",
               as: "fileList",
               pipeline: [
+                {
+                  $match: {
+                    company_id: id.toLowerCase(),
+                    monthReport: date,
+                  },
+                },
                 {
                   $group: {
                     _id: "$date",

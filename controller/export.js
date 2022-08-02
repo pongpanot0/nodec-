@@ -29,10 +29,8 @@ exports.Exportlogs = async (req, res) => {
     }
     if (result) {
       const lm = await log
-        .find({ company_id: `${id}`, monthReport: date })
-
+        .find({ company_id: `${id.toLowerCase()}`, monthReport: date })
         .toArray();
-
       const output = lm.map((obj1) =>
         Object.assign(
           obj1,
@@ -56,21 +54,17 @@ exports.Exportlogs = async (req, res) => {
       console.log(data);
       const convertJsonToexcel = () => {
         //binary string
-        const csv = require("csv-parser");
-        var csvContent =
-          "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csvContent);
-        const fs = require("fs"); // workbook options
-        fastcsv.write(data, { headers: true }).on("finish", function () {
-          console.log("1234");
-        }); // write workbook file
-        const ws = fs.createReadStream("data.csv"); // create read stream
-        ws.on("open", function () {
-          ws.pipe(csv());
-          res.header("Content-type", "text/csv; charset=utf-8");
-          res.header(`Content-disposition', 'attachment; filename=${date}.csv`);
-          // This just pipes the read stream to the response object (which goes to the client)
+        const fs = require("fs");
+        var wa = fs.createWriteStream("fileName");
+        const ws = fs.createReadStream('fileName');
+        fastcsv.write(data, { headers: true })
+        .pipe(wa)
+        .on("finish", function () {
+   
           ws.pipe(res);
-        });
+        }); // write workbook file
+        // create read stream
+   
       };
       convertJsonToexcel();
     }
@@ -124,7 +118,7 @@ exports.exportExcel = async (req, res) => {
         ];
         data.push(...jsonData);
       }
-      const convertJsonToexcel = () => {
+      const convertJsonToexcel2 = () => {
         const workSheet = XLSX.utils.json_to_sheet(data);
         const workBook = XLSX.utils.book_new();
 
@@ -145,7 +139,7 @@ exports.exportExcel = async (req, res) => {
           stream.pipe(res);
         });
       };
-      convertJsonToexcel();
+      convertJsonToexcel2();
     }
   });
 };
@@ -176,39 +170,39 @@ exports.exportExcelDetail = async (req, res) => {
       // Connect database to connection
       // class key
       const lm = await log
-      .aggregate([
-        {
-          $match: {
-            company_id: `${id.toLowerCase()}`,
-            monthReport: `${date.toLowerCase()}`,
-          },
-        },
-        {
-          $group: {
-            _id: {
-              name: "$log",
-              anSEnrollNumber: "$anSEnrollNumber",
-              date: "$date",
+        .aggregate([
+          {
+            $match: {
+              company_id: `${id.toLowerCase()}`,
+              monthReport: `${date.toLowerCase()}`,
             },
           },
-        },
-        {
-          $lookup: {
-            from: "log",
-            localField: "_id.anSEnrollNumber",
-            foreignField: "anSEnrollNumber",
-            as: "fileList",
+          {
+            $group: {
+              _id: {
+                name: "$log",
+                anSEnrollNumber: "$anSEnrollNumber",
+                date: "$date",
+              },
+            },
           },
-        },
-        {
-          $project: {
-            start: { $arrayElemAt: ["$fileList", 0] },
-            otherField: 1,
-            last: { $arrayElemAt: ["$fileList", -1] },
+          {
+            $lookup: {
+              from: "log",
+              localField: "_id.anSEnrollNumber",
+              foreignField: "anSEnrollNumber",
+              as: "fileList",
+            },
           },
-        },
-      ])
-      .toArray();
+          {
+            $project: {
+              start: { $arrayElemAt: ["$fileList", 0] },
+              otherField: 1,
+              last: { $arrayElemAt: ["$fileList", -1] },
+            },
+          },
+        ])
+        .toArray();
 
       const output = result.map((obj1) =>
         Object.assign(
@@ -220,19 +214,19 @@ exports.exportExcelDetail = async (req, res) => {
       res.send(output);
       const data = [];
       for (let i = 0; i < output.length; i++) {
-        if(output[i].start === undefined){
+        if (output[i].start === undefined) {
           const jsonData = [
             {
               Enrollnumber: output[i].Enrollnumber,
               name: output[i].Name,
-              วันที่: 'ไม่มีข้อมูล',
-              เวลาที่แสกนนิ้วเข้า: 'ไม่มีข้อมูล',
-              เวลาที่แสกนนิ้วออก: 'ไม่มีข้อมูล',
+              วันที่: "ไม่มีข้อมูล",
+              เวลาที่แสกนนิ้วเข้า: "ไม่มีข้อมูล",
+              เวลาที่แสกนนิ้วออก: "ไม่มีข้อมูล",
             },
           ];
           data.push(...jsonData);
         }
-        if(output[i].start !== undefined){
+        if (output[i].start !== undefined) {
           const jsonData = [
             {
               Enrollnumber: output[i].Enrollnumber,
@@ -245,7 +239,7 @@ exports.exportExcelDetail = async (req, res) => {
           data.push(...jsonData);
         }
       }
-      
+
       const convertJsonToexcel = () => {
         const workSheet = XLSX.utils.json_to_sheet(data);
         const workBook = XLSX.utils.book_new();
