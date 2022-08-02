@@ -770,6 +770,7 @@ exports.insertAttendance = async (req, res) => {
                               }
                             });
                           }
+                          db2.end();
                         }
                       }
                     }
@@ -780,7 +781,8 @@ exports.insertAttendance = async (req, res) => {
             });
           }
         });
-    }db2.end();
+    }
+
   });
 };
 
