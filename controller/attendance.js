@@ -311,6 +311,7 @@ exports.insertAttendance = async (req, res) => {
                                       .replace(":", "");
                                     var w3 = latemm - defmm;
                                     var w4 = latehh - defhh;
+                                    console.log(w3)
                                     await conn.connect();
                                     const cos = await conn
                                       .db("logAttendance")
@@ -351,12 +352,13 @@ exports.insertAttendance = async (req, res) => {
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
                                         .then((result2) => {
+                                          
                                           res.send(result2);
                                         })
                                         .catch((err) => {
                                           res.send(err);
                                         });
-                                    } else {
+                                    } if(w3 > 0) {
                                       await conn.connect();
                                       const cos = await conn
                                         .db("logAttendance")
@@ -377,6 +379,35 @@ exports.insertAttendance = async (req, res) => {
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
                                         .then((result2) => {
+                                          console.log('1234')
+                                          res.send(result2);
+                                        })
+                                        .catch((err) => {
+                                          res.send(err);
+                                        });
+
+                                    }
+                                    if(w3 == 0 || w3 < 0) {
+                                      await conn.connect();
+                                      const cos = await conn
+                                        .db("logAttendance")
+                                        .collection("log")
+                                        .updateOne(
+                                          { _id: idp },
+                                          { $set: { late:w3 } }
+                                        );
+                                      await lineNotify
+                                        .notify({
+                                          message: `${company_id}
+คุณ : ${Name} 
+แผนก : ${organize} 
+บันทึกเวลา : @${event.anDeviceID}
+วันที่ : ${event.date}
+เวลา : ${event.time}
+ดูสรุป :${process.env.FRONT_END_URL}`,
+                                        })
+                                        .then((result2) => {
+                                          console.log('1234')
                                           res.send(result2);
                                         })
                                         .catch((err) => {
@@ -453,7 +484,15 @@ exports.insertAttendance = async (req, res) => {
                                         .catch((err) => {
                                           res.send(err);
                                         });
-                                    } else {
+                                    } if(w3 > 0) {
+                                      await conn.connect();
+                                      const cos = await conn
+                                        .db("logAttendance")
+                                        .collection("log")
+                                        .updateOne(
+                                          { _id: idp },
+                                          { $set: { late:w3 } }
+                                        );
                                       await lineNotify
                                         .notify({
                                           message: `${company_id}
@@ -466,11 +505,41 @@ exports.insertAttendance = async (req, res) => {
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
                                         .then((result2) => {
+                                          console.log('1234')
                                           res.send(result2);
                                         })
                                         .catch((err) => {
                                           res.send(err);
                                         });
+
+                                    }
+                                    if(w3 == 0 || w3 < 0) {
+                                      await conn.connect();
+                                      const cos = await conn
+                                        .db("logAttendance")
+                                        .collection("log")
+                                        .updateOne(
+                                          { _id: idp },
+                                          { $set: { late:w3 } }
+                                        );
+                                      await lineNotify
+                                        .notify({
+                                          message: `${company_id}
+คุณ : ${Name} 
+แผนก : ${organize} 
+บันทึกเวลา : @${event.anDeviceID}
+วันที่ : ${event.date}
+เวลา : ${event.time}
+ดูสรุป :${process.env.FRONT_END_URL}`,
+                                        })
+                                        .then((result2) => {
+                                          console.log('1234')
+                                          res.send(result2);
+                                        })
+                                        .catch((err) => {
+                                          res.send(err);
+                                        });
+
                                     }
                                   }
                                 });
