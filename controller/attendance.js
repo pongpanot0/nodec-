@@ -104,7 +104,10 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
 คุณออกงานเวลา  : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                               })
@@ -133,7 +136,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 คุณออกงานเวลา  : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                               })
@@ -165,7 +172,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 คุณเข้างานเวลา  : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                 })
@@ -195,7 +206,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 คุณเข้างานเวลา  : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                 })
@@ -234,7 +249,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 คุณเข้า Ot เวลา  : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                     })
@@ -265,7 +284,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 คุณเข้า Ot เวลา  : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                     })
@@ -328,7 +351,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
@@ -346,7 +373,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป :${process.env.FRONT_END_URL}`,
@@ -373,7 +404,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 คุณสาย : ${w3} นาที
 ดูสรุป :${process.env.FRONT_END_URL}`,
@@ -402,7 +437,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
@@ -455,7 +494,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
@@ -473,7 +516,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป :${process.env.FRONT_END_URL}`,
@@ -499,7 +546,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 คุณสาย : ${w3} นาที
 ดูสรุป :${process.env.FRONT_END_URL}`,
@@ -528,7 +579,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                         })
@@ -564,7 +619,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                       })
@@ -594,7 +653,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                       })
@@ -647,7 +710,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                     })
@@ -665,7 +732,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป :${process.env.FRONT_END_URL}`,
@@ -684,7 +755,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 คุณสาย : ${w3} นาที
 ดูสรุป :${process.env.FRONT_END_URL}`,
@@ -732,7 +807,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                     })
@@ -750,7 +829,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 คุณสาย : ${w4} ชั่วโมง  ${w3} นาที
 ดูสรุป :${process.env.FRONT_END_URL}`,
@@ -768,7 +851,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 คุณสาย : ${w3} นาที
 ดูสรุป :${process.env.FRONT_END_URL}`,
@@ -803,7 +890,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                   })
@@ -833,7 +924,11 @@ exports.insertAttendance = async (req, res) => {
 คุณ : ${Name} 
 แผนก : ${organize} 
 บันทึกเวลา : @${event.anDeviceID}
-วันที่ : ${event.date}
+วันที่ : ${moment(event.date, "DD:MM:YYYY")
+.locale("th")
+.add(543, "year")
+.format("DD/MM/YYYY")}
+คุณออกงานเวลา  : ${event.time}
 เวลา : ${event.time}
 ดูสรุป :${process.env.FRONT_END_URL}`,
                                   })
