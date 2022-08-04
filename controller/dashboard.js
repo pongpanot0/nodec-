@@ -286,24 +286,40 @@ exports.monthReport = async (req, res) => {
 exports.serial = async (req, res) => {
   let db_name = req.body.db_name;
   let serialnumber = req.body.serialnumber;
-  let same = `SELECT COUNT(serialnumber) AS serialnumber FROM serail WHERE serialnumber='${serialnumber}'`;
+  let same = `SELECT COUNT(serialnumber) AS serialnumber FROM serail WHERE serialnumber="${serialnumber}"`;
   let count = `insert into serail (db_name,serialnumber)  VALUES ('${db_name}','${serialnumber}')`;
+  let update = `update serail set db_name = "${db_name}" where serialnumber = "${serialnumber}"`
   db.query(same, (err, result) => {
     if (err) {
       res.send(err);
+      return
     }
-    if (result) {
+    if (result[0].serialnumber > 0) {
+      console.log(result)
+      db.query(update, (err, result) => {
+        if (err) {
+          res.send(err);
+        }
+        if (result) {
+          res.send({
+            message : result
+          });
+
+        }
+      });
+    }
+    if (result[0].serialnumber == 0) {
+      console.log(result)
       db.query(count, (err, result) => {
         if (err) {
           res.send(err);
         }
         if (result) {
-          console.log(result);
           res.send({
             count: result.length,
             data: result,
           });
-          db2.end();
+
         }
       });
     }
