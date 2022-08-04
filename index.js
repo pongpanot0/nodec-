@@ -25,7 +25,6 @@ fs.readdirSync("routes").forEach(function (file) {
   require("./routes/" + routeName)(app);
 });
 
-
 app.listen(7000, () => {
   console.log("server start ");
 });
@@ -41,24 +40,38 @@ cron.schedule(
   "0 00 * * *",
   () => {
     const mysql = require("mysql2");
-    var connection = {
-      host: "119.59.97.193",
-      user: "root",
-      password: "123456",
-      database: `pom`,
-      port: "33037",
-      connectionLimit: 10,
-    };
-    let db2 = null;
-    db2 = mysql.createPool(connection);
 
+    let getdb = `select * from serail`;
     let cs = `update employee set Stamp = 1`;
-    db2.query(cs, async (err, result) => {
+    db.query(getdb, async (err, result) => {
       if (err) {
         console.log(err);
       }
       if (result) {
-        console.log(result);
+        const data = [];
+        for (let i = 0; i < result.length; i++) {
+          const connection = {
+            host: `${process.env.db_host}`,
+            user: `${process.env.db_user}`,
+            password: `${process.env.db_password}`,
+            database: `${result[i].db_name}`,
+            port: `${process.env.db_port}`,
+            connectionLimit: 1000,
+          };
+
+          data.push(connection);
+        }
+        console.log(data);
+        db2 = mysql.createConnection(data[1]);
+
+        db2.query(cs, async (err, result) => {
+          if (err) {
+            console.log(err);
+          }
+          if (result) {
+            res.send(result);
+          }
+        });
       }
     });
   },
