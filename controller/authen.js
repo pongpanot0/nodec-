@@ -19,6 +19,7 @@ exports.register = (req, res) => {
           (err, result) => {
             if (err) {
               console.log(err);
+              return
             }
             if (result) {
               res.send({
@@ -40,6 +41,7 @@ exports.login = async (req, res) => {
       console.log(result);
       if (err) {
         console.log(err);
+        return
       }
       if (result[0].password !== req.body.password) {
         res.send({

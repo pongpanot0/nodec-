@@ -45,7 +45,7 @@ cron.schedule(
       host: "119.59.97.193",
       user: "root",
       password: "123456",
-      database: `siam`,
+      database: `pom`,
       port: "33037",
       connectionLimit: 10,
     };

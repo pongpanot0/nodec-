@@ -17,5 +17,5 @@ RUN npm install mongoose
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
+EXPOSE 7000
 CMD [ "npm", "start" ]

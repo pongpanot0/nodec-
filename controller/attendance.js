@@ -9,6 +9,9 @@ exports.insertAttendance = async (req, res) => {
   };
   let check = `select * from serail where serialnumber=${checksame.astrSerialNo}`;
   db.query(check, async (err, result) => {
+    if(err){
+      console.log(err)
+    }
     if (result) {
       const event = {
         anSEnrollNumber: req.body.anSEnrollNumber,
@@ -41,7 +44,6 @@ exports.insertAttendance = async (req, res) => {
             console.log(err);
           }
           if (result) {
-            res.send(result);
             const idp = result.insertedId;
             var mysql = require("mysql2");
             var connection = {
@@ -52,14 +54,16 @@ exports.insertAttendance = async (req, res) => {
               port: "33037",
               connectionLimit: 10,
             };
+
             let db2=null
-            db2 = mysql.createPool(connection);
+            db2 = mysql.createConnection(connection);
             let update = `update employee set Stamp = 0  where Enrollnumber=${event.anSEnrollNumber}`;
             db2.query(update, async (err, result) => {
               if (err) {
                 console.log(err);
               }
               if (result) {
+             
                 let user = `select u.*,c.*,a.* from employee u  LEFT outer JOIN department c on (u.Depcode = c.Depcode)  left outer join company a ON (a.Companycode=c.Companycode)  where  u.Enrollnumber=${event.anSEnrollNumber}`;
                 db2.query(user, async (err, result) => {
                   if (err) {
@@ -73,6 +77,7 @@ exports.insertAttendance = async (req, res) => {
                     let Companycode = result[0].Companycode;
                     let ckline = `select * from setting`;
                     db2.query(ckline, async (err, result) => {
+                      
                       if (err) {
                         console.log(err);
                       }
@@ -89,6 +94,7 @@ exports.insertAttendance = async (req, res) => {
                             res.send(err);
                           }
                           if (result2[0].Linetoken !== null) {
+                            console.log(result2)
                             const lineNotify = require("line-notify-nodejs")(
                               `${result2[0].Linetoken}`
                             );
@@ -603,6 +609,7 @@ exports.insertAttendance = async (req, res) => {
                                     });
                                 } else {
                                   await lineNotify
+                                  
                                     .notify({
                                       message: `${company_id}
 คุณ : ${Name} 

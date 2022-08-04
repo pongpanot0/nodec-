@@ -8,5 +8,5 @@ module.exports = function (app) {
   app.get("/employees/:id",dashboard.employees)
   app.post("/serial",dashboard.serial)
   app.get("/setting/:id",dashboard.setting)
-  
+  app.get("/datetodate/:id/:date/:todate",dashboard.datetodate)
 };
