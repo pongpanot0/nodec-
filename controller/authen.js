@@ -50,13 +50,21 @@ exports.login = async (req, res) => {
       console.log(err);
       return;
     }
+    if (result[0] === null || result[0] === [] || result[0] === undefined) {
+      res.send({
+        status: 400,
+        message: "ชื่อหรือรหัสผ่านไม่ถูกต้อง",
+      });
+      return
+    }
     if (result[0].password !== req.body.password) {
       res.send({
         status: 400,
         message: "ชื่อหรือรหัสผ่านไม่ถูกต้อง",
       });
+      return;
     }
-    if (result[0].password == req.body.password) {
+    if (result[0].password === req.body.password) {
       const token = jwt.sign(
         {
           username: result[0].email,
