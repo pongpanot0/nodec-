@@ -190,9 +190,8 @@ exports.exportExcelDetail = async (req, res) => {
           {
             $lookup: {
               from: "log",
-              localField: "_id.anSEnrollNumber",
-              foreignField: "anSEnrollNumber",
               as: "fileList",
+              let:{fileList:"$fileList"},
             },
           },
           {
@@ -316,9 +315,8 @@ exports.exportExcelDatetoDate = async (req, res) => {
           {
             $lookup: {
               from: "log",
-              localField: "_id.anSEnrollNumber",
-              foreignField: "anSEnrollNumber",
               as: "fileList",
+              let:{fileList:"$fileList"},
             },
           },
           {

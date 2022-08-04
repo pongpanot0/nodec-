@@ -204,9 +204,8 @@ exports.exportdate = async (req, res) => {
           {
             $lookup: {
               from: "log",
-              
-              localField: "_id.anSEnrollNumber",
-              foreignField: "anSEnrollNumber",
+              as: "fileList",
+              let:{fileList:"$fileList"},
               as: "fileList",
               pipeline: [
                 {
@@ -388,9 +387,8 @@ exports.datetodate = async (req, res) => {
         {
           $lookup: {
             from: "log",
-            localField: "_id.anSEnrollNumber",
-            foreignField: "anSEnrollNumber",
             as: "fileList",
+            let:{fileList:"$fileList"},
             pipeline: [
               {
                 $match: {

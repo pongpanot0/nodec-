@@ -26,7 +26,7 @@ fs.readdirSync("routes").forEach(function (file) {
 });
 
 
-app.listen(8080, () => {
+app.listen(7000, () => {
   console.log("server start ");
 });
 
