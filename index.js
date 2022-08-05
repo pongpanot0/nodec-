@@ -9,6 +9,7 @@ var upload = multer();
 app.use(bodyParser.json());
 const cors = require("cors");
 app.use(cors({ origin: "*" }));
+const db = require('./config/db')
 app.use(function (req, res, next) {
   next();
 });
@@ -35,7 +36,7 @@ const swaggerFile = require("./swagger_output.json");
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 const cron = require("node-cron");
-
+ 
 cron.schedule(
   "0 00 * * *",
   () => {
@@ -62,14 +63,14 @@ cron.schedule(
           data.push(connection);
         }
         console.log(data);
-        db2 = mysql.createConnection(data[1]);
+        db2 = mysql.createConnection(...data);
 
         db2.query(cs, async (err, result) => {
           if (err) {
             console.log(err);
           }
           if (result) {
-            res.send(result);
+            console.log(result)
           }
         });
       }
