@@ -53,7 +53,7 @@ exports.notstamp = async (req, res) => {
   let db2 = null;
   db2 = mysql.createPool(connection);
 
-  let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 1`;
+  let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 1 ORDER BY Name ASC`;
   db2.query(count, (err, result) => {
     if (err) {
       res.send(err);
@@ -82,7 +82,7 @@ exports.stamp = async (req, res) => {
   let limit = req.params.limit;
   let offset = req.params.offset;
 
-  let count = `select e.*,c.*, (select count(*)  from employee where Active=1) as total , (select count(*)  from employee where Stamp = 0) as total2  from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 0 limit ${limit} offset ${offset} `;
+  let count = `select e.*,c.*, (select count(*)  from employee where Active=1) as total , (select count(*)  from employee where Stamp = 0) as total2  from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 0 limit ${limit} offset ${offset};`;
   db2.query(count, async (err, result) => {
     if (err) {
       console.log(err);
