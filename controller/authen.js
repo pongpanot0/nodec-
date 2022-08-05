@@ -94,18 +94,19 @@ exports.login = async (req, res) => {
                 "zuHbAry/7IrrSQaynzj4c8i8n1iO+CCqzdyeXgRNlfDdQBUJcX9yrYGc98fqp169/ELDSLwtvzebeQ0nf6WkOiXUhOdStRMhPykd/nJwEdmENXThvX9Map7k1gwvXvciZ48DYVc7nntfN82k+ZXSRX2+rTN8YEK3S7tP/0csBYdQwB6OS5FzMHM1gQvK3VX4QAlC6nDbvLsYOBqZcYsDlvlL/Uglw57wNNpLfwjQQC+zXBFvGnROVNLh//yyBl1kB+YmIZXrnkrUkNbLm7QteW+6nXUWZ1gQOEatjCr9NnYxaY4Ve0QABq0sHzifZ65Bz4HVFptun97VS4LSTJmxeQ==",
                 { expiresIn: "1h" }
               );
-
               res.send({
                 status: 200,
                 token: token,
                 user: result,
               });
             }
-            return res.send({
+            else {
+              return res.send({
               status: 400,
               message: "ชื่อหรือรหัสผ่านไม่ถูกต้อง",
             });
           }
+        }
         );
       }
     }
