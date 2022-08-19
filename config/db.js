@@ -5,7 +5,7 @@ var connection = ({
   password:`${process.env.db_password}`,
   database:`${process.env.db_database}`,
   port:`${process.env.db_port}`,
-  connectionLimit: 1000,
+
 })
 
 let db=null;
@@ -43,7 +43,7 @@ function handleDisconnect() {
 
 setInterval(function () {
   db.query('SELECT 1');
-}, 1200);
+}, 3000);
 handleDisconnect(); 
 
 

@@ -48,20 +48,27 @@ exports.notstamp = async (req, res) => {
     password: "123456",
     database: `${id.toLowerCase()}`,
     port: "33037",
-    connectionLimit: 10,
+    
   };
   let db2 = null;
   db2 = mysql.createPool(connection);
 
-  let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 1 ORDER BY Name ASC`;
+  let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 1   ORDER BY Depname ASC,Name `;
   db2.query(count, (err, result) => {
     if (err) {
+      console.log(err);
       res.send(err);
     }
     if (result) {
+      (hash = result.reduce(
+        (p, c) => (p[c.Depname] ? p[c.Depname].push(c) : (p[c.Depname] = [c]), p),
+        {}
+        
+      )),
+        (newData = Object.keys(hash).map((k) => ({ Depcode: k, Detail: hash[k] })));
       res.send({
         count: result.length,
-        data: result,
+        data: newData,
       });
       db2.end();
     }

@@ -97,10 +97,46 @@
         }
       }
     },
-    "/stamp/{id}": {
+    "/stamp/{id}/{limit}/{offset}": {
       "get": {
         "description": "",
         "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "offset",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/exportdate/{date}/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "id",
             "in": "path",
@@ -115,39 +151,17 @@
         }
       }
     },
-    "/autoupdate": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/exportdate/{date}": {
+    "/monthReport/{id}": {
       "get": {
         "description": "",
         "parameters": [
           {
-            "name": "date",
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/monthReport": {
-      "get": {
-        "description": "",
-        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -200,6 +214,54 @@
         }
       }
     },
+    "/setting/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/datetodate/{id}/{date}/{todate}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "todate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/insertAttendance": {
       "post": {
         "description": "",
@@ -210,6 +272,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "astrSerialNo": {
+                  "example": "any"
+                },
                 "anSEnrollNumber": {
                   "example": "any"
                 },
@@ -231,13 +296,7 @@
                 "anDeviceID": {
                   "example": "any"
                 },
-                "astrSerialNo": {
-                  "example": "any"
-                },
                 "astrRootIP": {
-                  "example": "any"
-                },
-                "company_id": {
                   "example": "any"
                 }
               }

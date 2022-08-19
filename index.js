@@ -36,7 +36,7 @@ const swaggerFile = require("./swagger_output.json");
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 const cron = require("node-cron");
- 
+
 cron.schedule(
   "0 00 * * *",
   () => {
@@ -57,20 +57,21 @@ cron.schedule(
             password: `${process.env.db_password}`,
             database: `${result[i].db_name}`,
             port: `${process.env.db_port}`,
-            connectionLimit: 1000,
+            
           };
 
           data.push(connection);
         }
-        console.log(data);
         db2 = mysql.createConnection(...data);
 
         db2.query(cs, async (err, result) => {
           if (err) {
-            console.log(err);
+            console.log(err)
           }
           if (result) {
+            
             console.log(result)
+     
           }
         });
       }
