@@ -53,7 +53,7 @@ exports.notstamp = async (req, res) => {
   let db2 = null;
   db2 = mysql.createPool(connection);
 
-  let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) where e.Stamp = 1   ORDER BY Depname ASC,Name `;
+  let count = `select e.*,c.*,u.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode) LEFT outer JOIN company u on (u.Companycode = c.Companycode) where e.Stamp = 1 AND u.Active = 1   ORDER BY Depname ASC,Name `;
   db2.query(count, (err, result) => {
     if (err) {
       console.log(err);
