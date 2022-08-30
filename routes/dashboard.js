@@ -9,4 +9,6 @@ module.exports = function (app) {
   app.post("/serial",dashboard.serial)
   app.get("/setting/:id",dashboard.setting)
   app.get("/datetodate/:id/:date/:todate",dashboard.datetodate)
+  app.get("/getCompanyname/:id",dashboard.getCompanyname)
+  
 };

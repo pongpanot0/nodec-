@@ -3,6 +3,28 @@ const conn = require("../config/mongodb");
 const Event = require("../Model/Event");
 const moment = require("moment");
 var mysql = require("mysql2");
+exports.getCompanyname = async (req, res) => {
+  let id = req.params.id;
+  var connection = {
+    host: "119.59.97.193",
+    user: "root",
+    password: "123456",
+    database: `${id.toLowerCase()}`,
+    port: "33037",
+  };
+  let db2 = null;
+  db2 = mysql.createPool(connection);
+  let get = `select * from company where Active = 1`;
+  db2.query(get, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    if (result) {
+      res.send(result);
+    }
+  });
+};
+
 exports.getGraph = async (req, res) => {
   await conn.connect();
   const log = await conn.db("logAttendance").collection("log").distinct("Name");
@@ -48,7 +70,6 @@ exports.notstamp = async (req, res) => {
     password: "123456",
     database: `${id.toLowerCase()}`,
     port: "33037",
-    
   };
   let db2 = null;
   db2 = mysql.createPool(connection);
@@ -61,11 +82,15 @@ exports.notstamp = async (req, res) => {
     }
     if (result) {
       (hash = result.reduce(
-        (p, c) => (p[c.Depname] ? p[c.Depname].push(c) : (p[c.Depname] = [c]), p),
+        (p, c) => (
+          p[c.Depname] ? p[c.Depname].push(c) : (p[c.Depname] = [c]), p
+        ),
         {}
-        
       )),
-        (newData = Object.keys(hash).map((k) => ({ Depcode: k, Detail: hash[k] })));
+        (newData = Object.keys(hash).map((k) => ({
+          Depcode: k,
+          Detail: hash[k],
+        })));
       res.send({
         count: result.length,
         data: newData,
@@ -123,7 +148,7 @@ exports.stamp = async (req, res) => {
             $lookup: {
               from: "log",
               as: "fileList",
-              let:{fileList:"$fileList"},
+              let: { fileList: "$fileList" },
               pipeline: [
                 { $match: { date: moment(new Date()).format("DD:MM:YYYY") } },
               ],
@@ -212,7 +237,7 @@ exports.exportdate = async (req, res) => {
             $lookup: {
               from: "log",
               as: "fileList",
-              let:{fileList:"$fileList"},
+              let: { fileList: "$fileList" },
               as: "fileList",
               pipeline: [
                 {
@@ -295,28 +320,27 @@ exports.serial = async (req, res) => {
   let serialnumber = req.body.serialnumber;
   let same = `SELECT COUNT(serialnumber) AS serialnumber FROM serail WHERE serialnumber="${serialnumber}"`;
   let count = `insert into serail (db_name,serialnumber)  VALUES ('${db_name}','${serialnumber}')`;
-  let update = `update serail set db_name = "${db_name}" where serialnumber = "${serialnumber}"`
+  let update = `update serail set db_name = "${db_name}" where serialnumber = "${serialnumber}"`;
   db.query(same, (err, result) => {
     if (err) {
       res.send(err);
-      return
+      return;
     }
     if (result[0].serialnumber > 0) {
-      console.log(result)
+      console.log(result);
       db.query(update, (err, result) => {
         if (err) {
           res.send(err);
         }
         if (result) {
           res.send({
-            message : result
+            message: result,
           });
-
         }
       });
     }
     if (result[0].serialnumber == 0) {
-      console.log(result)
+      console.log(result);
       db.query(count, (err, result) => {
         if (err) {
           res.send(err);
@@ -326,7 +350,6 @@ exports.serial = async (req, res) => {
             count: result.length,
             data: result,
           });
-
         }
       });
     }
@@ -377,8 +400,8 @@ exports.datetodate = async (req, res) => {
   const connect = conn.db("logAttendance");
   const log = connect.collection("log");
   // Connect database to connection
-  let date =req.params.date
-  let todate = req.params.todate
+  let date = req.params.date;
+  let todate = req.params.todate;
   // class key
   let count = `select e.*,c.* from employee e LEFT outer JOIN department c on (e.Depcode = c.Depcode)`;
 
@@ -388,59 +411,59 @@ exports.datetodate = async (req, res) => {
     }
     if (result) {
       const lm = await log
-      .aggregate([
-        {
-          $match: {
-            company_id: id.toLowerCase(),
-            date: {
-              $gte: date.toLowerCase(),
-              $lt: todate.toLowerCase(),
+        .aggregate([
+          {
+            $match: {
+              company_id: id.toLowerCase(),
+              date: {
+                $gte: date.toLowerCase(),
+                $lt: todate.toLowerCase(),
+              },
             },
           },
-        },
 
-        {
-          $group: {
-            _id: {
-              name: "$log",
-              anSEnrollNumber: "$anSEnrollNumber",
+          {
+            $group: {
+              _id: {
+                name: "$log",
+                anSEnrollNumber: "$anSEnrollNumber",
+              },
             },
           },
-        },
-        {
-          $lookup: {
-            from: "log",
-            as: "fileList",
-            let:{fileList:"$fileList"},
-            pipeline: [
-              {
-                $match: {
-                  company_id: id.toLowerCase(),
-                  date: {
-                    $gte: date.toLowerCase(),
-                    $lt: todate.toLowerCase(),
+          {
+            $lookup: {
+              from: "log",
+              as: "fileList",
+              let: { fileList: "$fileList" },
+              pipeline: [
+                {
+                  $match: {
+                    company_id: id.toLowerCase(),
+                    date: {
+                      $gte: date.toLowerCase(),
+                      $lt: todate.toLowerCase(),
+                    },
                   },
                 },
-              },
-              {
-                $group: {
-                  _id: "$date",
-                  start: { $first: "$time" },
-                  late: { $first: "$late" },
-                  last: { $last: "$time" },
+                {
+                  $group: {
+                    _id: "$date",
+                    start: { $first: "$time" },
+                    late: { $first: "$late" },
+                    last: { $last: "$time" },
+                  },
                 },
-              },
-            ],
+              ],
+            },
           },
-        },
-        {
-          $project: {
-            start: ["$fileList", 0],
-            last: ["$fileList", -1],
-            scan: { $size: "$fileList" },
+          {
+            $project: {
+              start: ["$fileList", 0],
+              last: ["$fileList", -1],
+              scan: { $size: "$fileList" },
+            },
           },
-        },
-      ])
+        ])
         .toArray();
 
       const output = result.map((obj1) =>
